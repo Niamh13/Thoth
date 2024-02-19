@@ -39,13 +39,14 @@ body, html {
     justify-content: space-between;
     align-items: center;
   }
-  .links a:hover {
-    text-decoration: underline;
-  }
+ 
   .forgot-password {
     text-decoration: none;
     color: #5c6bc0;
     font-size: 0.9em;
+  }
+  .links a:hover {
+    text-decoration: underline;
   }
   
   .login-button {
