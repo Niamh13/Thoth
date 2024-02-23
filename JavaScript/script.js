@@ -170,7 +170,7 @@ function saveBook() {
     publishedDate: document.getElementById("bookPublishedDate").innerText,
     isbn: document.getElementById("bookISBN").innerText,
     cover: document.getElementById("bookCover").src,
-  };
+  }; 
   saveJSONToFile(bookInfo, "book_info.json");
   alert("Book saved!");
 }
