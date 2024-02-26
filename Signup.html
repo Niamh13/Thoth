@@ -3,6 +3,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thoth</title>
+    <link href="CSS/signup.css" rel="stylesheet" type="text/css" />
     <link href="CSS/styles.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -25,6 +26,44 @@
           >
         </div>
       </div>
+
+        <div class="signup-container">
+          <h2>SIGN UP</h2>
+
+          <form class="signup-form" action="connect.php" method="post">
+      
+            <div class="input-group">
+              <input type="text" id="fullName" name="fullName" placeholder="Full Name" required>
+            </div>
+
+            <div class= "input-group">
+              <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+
+            <div class="input-group">
+              <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+      
+            <div class="input-group">
+              <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+
+            <div class="input-group">
+              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+            </div>
+      
+      
+            <div class="links">
+              <button type="submit" class="signup-button">Sign up</button>
+            </div>
+            
+          </form>
+      
+          <div class="login">
+            Already have an account? <a href="Login.html">Login</a>
+          </div>
+      
+        </div>
 
     <script src="JavaScript/script.js"></script>
   </body>
