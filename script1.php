@@ -21,11 +21,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $result = $conn->query($query);
 
     if($result->num_rows == 1){
-        header("Location: library.html");
+        header('Location: library.html';
         exit();
     }
     else{
-        header("Location: index.html");
+        header('Location: index.html');
         exit();
     }
 
