@@ -175,6 +175,19 @@ function saveBook() {
   alert("Book saved!");
 }
 
+// Pre-set login check //
+function check() {
+  let user = document.getElementById("username").value;
+  let password = document.getElementById("password").value;
+
+  if(user === "user1" && password === "teamP"){
+    window.location.href='library.html';
+  }
+  else{
+    prompt("Username and/or password is incorrect");
+  }
+}
+
 /*
 ------------------------------
 ----------REFERENCES----------
