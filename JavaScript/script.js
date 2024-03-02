@@ -174,19 +174,65 @@ function saveBook() {
   saveJSONToFile(bookInfo, "book_info.json");
   alert("Book saved!");
 }
+/*
+------------------------------
+----------Navigation----------
+------------------------------
+*/
+function toggleDropdown() {
+  document.getElementById("DropdownContent").classList.toggle("show");
+}
 
-// Pre-set login check //
+function openSideNav() {
+  document.getElementById("SideNav").style.width = "250px";
+}
+
+function closeSideNav() {
+  document.getElementById("SideNav").style.width = "0";
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn') && !event.target.matches('.dropbtn *')) {
+    var dropdowns = document.getElementsByClassName("DropdownContent");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+
+  var sideMenu = document.getElementById("SideNav");
+  if (!event.target.matches('.dropbtn') && !event.target.matches('.icon') && !event.target.closest('.SideNav') && sideMenu.style.width === "250px") {
+    sideMenu.style.width = "0";
+  }
+}
+function logout() {
+  alert("You have been logged out.");
+  window.location.href = 'index.html';
+}
+/*
+------------------------------
+----------Login---------------
+------------------------------
+*/
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById('AccForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    check();
+  });
+});
+
 function check() {
   let user = document.getElementById("username").value;
   let password = document.getElementById("password").value;
-
-  if(user === "user1" && password === "teamP"){
-    window.location.href='library.html';
-  }
-  else{
-    prompt("Username and/or password is incorrect");
+  if (user === "user1" && password === "teamP") {
+    window.location.href = 'library.html';
+  } else {
+    alert("Username and/or password is incorrect");
   }
 }
+
 
 /*
 ------------------------------
