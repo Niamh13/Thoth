@@ -3,29 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="CSS/style.css" />
+    <link rel="stylesheet" href="CSS/styles.css" />
     <title>Library Page</title>
   </head>
   <body>
-    <div class="navbar" id="myTopnav">
-        <a id="title" href="index.html">Home</a>
-        <a id="title" href="search.html">Search</a>
-        <div class="dropdown">
-          <button class="dropbtn" id="title">
-            <img scr="Icon.png"/>
-          </button>
-          <div class="dropdown-content">
-            <a href="Profile.html">My Profile</a>
-            <a href="library.html">My Library</a>
-            <a href="Service.html">Customer Service</a>
-            <a href="Profile.html">Settings</a>
-            <button onclick="">Log Out</button>
-          </div>
-          <a href="javascript:void(0);" class="icon" onclick="myFunction()"
-            >&#9776;</a
-          >
+    <!-- Navigation bar section -->
+    <div class="TopNav">
+      <!-- Navigation links -->
+      <a class="link" href="index.html">Home</a>
+      <a class="link" href="search.html">Search</a>
+
+      <!-- Dropdown menu for user profile and settings -->
+      <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">
+          <!-- User icon in the dropdown button -->
+          <img src="user.png" alt="User" style="vertical-align: middle;">
+        </button>
+
+        <!-- Dropdown content hidden by default shown on click -->
+        <div class="DropdownContent" id="DropdownContent">
+          <a href="#">My Profile</a>
+          <a href="#">My Library</a>
+          <a href="#">Customer Service</a>
+          <a href="#">Settings</a>
+          <!-- Logout link with inline onclick event to call logout function -->
+          <a onclick="logout()" href="index.html">Logout</a>
         </div>
       </div>
+
+      <!-- Hamburger icon for mobile navigation menu -->
+      <a href="javascript:void(0);" class="icon" onclick="openSideNav()">&#9776;</a>
+    </div>
+
+    <!-- Side navigation menu hidden by default -->
+    <div id="SideNav" class="SideNav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
+      <a class="link" href="index.html">Home</a>
+      <a class="link" href="search.html">Search</a>
+    </div>
       
       <h1>Success</h1>
   </body>
