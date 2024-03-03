@@ -147,6 +147,41 @@ body {
   font-size: 36px;
 }
 
+/* Index Page */
+
+.indexContent {
+  width: 50%;
+  float: left;
+  margin-right: 50px; 
+  margin-left: 50px; 
+  margin-top: 50px; 
+}
+
+.indexButton{
+  margin-top: 50px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.indexButton button {
+  margin-right: 30px; 
+  margin-left: 30px; 
+}
+
+.indexImgContainer {
+  width: 40%; 
+  float: right; 
+}
+
+.indexImg {
+  width:35%; 
+  height: auto; 
+  margin-top: 50px; 
+  margin-right: 20px; 
+  margin-left: 50px; 
+}
+
 /* Login Container */
 .AccContainer {
   width: 300px;
