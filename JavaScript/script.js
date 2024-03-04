@@ -1,191 +1,185 @@
 /*
---------------------------
-----------SEARCH----------
---------------------------
+=======================
+====SEARCH FUNCTION====
+=======================
 */
-// Reference 1
-const apiKey = "AIzaSyDeo-CS4IKRvG97TjG_usoPKNrgdVv0xXg";
-
-// function to search for book info
-function searchBooks() {
-  // const searchInput = document.getElementById("searchInput").value;
-  const searchInput = "harry potter";
-
-  // Construct the API URL
-  const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
-    searchInput
-  )}&langRestrict=en&orderBy=relevance&key=${apiKey}`;
-
-  // Make the API request
-  fetch(apiUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      displaySearchResults(data.items);
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-}
-
-/*
-------------------------------
-----DISPLAY SEARCH RESULTS----
-------------------------------
-*/
-
-// function to display results
-function displaySearchResults(books) {
-  const resultsContainer = document.getElementById("results");
-  resultsContainer.innerHTML = "";
-
-  if (books && books.length > 0) {
-    books.forEach((book) => {
-      const author = book.volumeInfo.authors;
-      const bookInfo = document.createElement("div");
-      bookInfo.classList.add("grid-item"); // Add grid item class
-      const cover = book.volumeInfo.imageLinks.thumbnail;
-      const id = book.id;
-      const isbn = book.volumeInfo.industryIdentifiers[0].identifier;
-      const title = book.volumeInfo.title;
-
-      bookInfo.innerHTML = `
-        <img class="bookResultImage" src="${cover}" alt="Book Cover">
-        <h3>${title}</h3>
-        <p><strong>Authors:</strong> ${author}</p>
-        <button onclick="bookPage('${id}')">View</button>
-      `;
-      resultsContainer.appendChild(bookInfo);
-    });
+function search() {
+  const searchInput = document.getElementById("search").value;
+  if (searchInput == "") {
+    alert("Please enter a search");
   } else {
-    resultsContainer.innerHTML = "<p>No results found.</p>";
+    // Reference 1
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchInput}`)
+      .then((response) => response.json())
+      .then((data) => {
+        displayResults(data.items);
+        console.log(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
   }
 }
 
-// function to navigate to book page
-function bookPage(id) {
-  // Reference 2
-  const encodedId = encodeURIComponent(id);
-  const bookPage = `book.html?id=${encodedId}`;
-  window.location.href = bookPage;
+/*
+=======================
+====DISPLAY RESULTS====
+=======================
+*/
+function displayResults(books) {
+  const searchResults = document.getElementById("searchResults");
+  searchResults.innerHTML = "";
+
+  books.forEach((book) => {
+    const bookInfo = `
+        <div class="searchResultDiv">
+          <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover">
+          <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
+          <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
+          <button class="saveButton" onclick="saveToLibrary('${book.id}')">Save to Library</button>
+          <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
+        </div>
+    `;
+    searchResults.innerHTML += bookInfo;
+  });
 }
 
-// function to get ISBN from URL and perform a search
-function getURL() {
-  const currentUrl = new URL(window.location.href);
-  let id = currentUrl.searchParams.get("id");
-  searchID(id);
-}
-
-// function to search for book by ISBN
-function searchID(id) {
-  const searchInput = id;
-
-  // Construct the API URL
-  const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
-    searchInput
-  )}&orderBy=relevance&key=${apiKey}`;
-
-  // Make the API request
-  fetch(apiUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      displayBookInfo(data.items);
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
+// Reference 2
+function viewBook(bookId) {
+  window.location.href = `book-details.html?id=${bookId}`;
 }
 
 /*
-------------------------------
-----------BOOK PAGE-----------
-------------------------------
+=======================
+===DISPLAY BOOK PAGE===
+=======================
 */
+function getBook() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const bookId = urlParams.get("id");
 
-// function to display book information
-function displayBookInfo(books) {
-  const resultsContainer = document.getElementById("bookInfo");
+  fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      displayBookDetails(data);
+      console.log(data);
+    })
+    .catch((error) => console.error("Error fetching book details:", error));
 
-  const author = books[0].volumeInfo.authors;
-  const cover = books[0].volumeInfo.imageLinks.thumbnail;
-  const description = books[0].volumeInfo.description;
-  const isbn = books[0].volumeInfo.industryIdentifiers[0].identifier;
-  const published = books[0].volumeInfo.publishedDate;
-  const title = books[0].volumeInfo.title;
-
-  const bookInfo = document.createElement("div");
-  bookInfo.classList.add("book-wrapper");
-
-  bookInfo.innerHTML = `
-      <div class="col-1">
-        <img id="bookCover" src="${cover}" alt="Book Cover" />
-        <p id="bookPublishedDate"><strong>Published Date:</strong> ${published}</p>
-        <p id="bookISBN">ISBN: ${isbn}</p>
+  function displayBookDetails(book) {
+    const bookDetails = document.getElementById("bookDetails");
+    bookDetails.innerHTML = `
+    <div class="container">
+    <h1 class="bookHeading">${book.volumeInfo.title}</h1>  
+    <div class="bookDiv">
+      <div class="leftContent">
+        <img src="${book.volumeInfo.imageLinks.thumbnail}" />
+        <p><strong>Author:</strong> ${book.volumeInfo.authors}</p>
+        <p><strong>Publisher:</strong> ${book.volumeInfo.publisher}</p>
+        <p><strong>Published Date:</strong> ${book.volumeInfo.publishedDate}</p>
+        <p><strong>Page Count:</strong> ${book.volumeInfo.pageCount}</p>
+        <p><strong>Categories:</strong> ${book.volumeInfo.categories}</p>
+        <p><strong>Rating:</strong> ${book.volumeInfo.averageRating}</p>
+        <button class="bookPageSaveButton" onclick="saveToLibrary('${book.id}')">
+          <strong>Save to Library</strong>
+        </button>
       </div>
-      <div class="col-2">
-        <h3 id="bookTitle">${title}</h3>
-        <p id="bookAuthors"><strong>Authors:</strong> ${author}</p>
-        <p id="bookDescription"><strong>Description:</strong> ${description}</p>
+      <div class="rightContent">
+        <h2 id="bookDescHead">Description</h2>
+        <p id="bookDesc">${book.volumeInfo.description}</p>
+      </div>
+    </div>
+    <div class="userReviewsContainer">
+      <h1 id="userReviewTitle">User Reviews</h1>
+      <div class="userReviews">
+        <div class="userReview">
+          <p class="userReviewUsername"><strong>User 128482</strong></p>
+          <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
+        </div>
+        <div class="userReview">
+          <p class="userReviewUsername"><strong>User 128482</strong></p>
+          <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
+        </div>
+        <div class="userReview">
+          <p class="userReviewUsername"><strong>User 128482</strong></p>
+          <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
+        </div>
+        <div class="userReview">
+          <p class="userReviewUsername"><strong>User 128482</strong></p>
+          <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    `;
+  }
+}
+
+/*
+=======================
+=======SAVE BOOK=======
+=======================
+*/
+// Reference 3
+// function to store the book ids in an array
+function saveToLibrary(bookId) {
+  // fetches the library array from local storage, or creates one if it doesn't exist.
+  let library = JSON.parse(localStorage.getItem("library")) || [];
+
+  // checks if the books ID is already in the library array.
+  if (!library.includes(bookId)) {
+    // adds the book
+    library.push(bookId);
+
+    // stores the library array in localstorage.
+    localStorage.setItem("library", JSON.stringify(library));
+
+    // tells the user the book was saved.
+    alert("Book saved to library!");
+  } else {
+    // tells the user if the book is already in the array.
+    alert("Book already exists in library!");
+  }
+}
+
+/*
+=======================
+=====USERS LIBRARY=====
+=======================
+*/
+function loadLibrary() {
+  const libraryBooks = document.getElementById("libraryBooks");
+  libraryBooks.innerHTML = "";
+
+  // fetches the library array from local storage, or creates one if it doesn't exist.
+  const library = JSON.parse(localStorage.getItem("library")) || [];
+
+  if (library.length === 0) {
+    // if the user's library is empty, prints a message to the screen.
+    libraryBooks.innerHTML = "<p>No books saved in your library.</p>";
+    return;
+  }
+
+  library.forEach((bookId) => {
+    fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        displayBook(data);
+        console.log(data);
+      })
+      .catch((error) => console.error("Error fetching book details:", error));
+  });
+}
+
+function displayBook(book) {
+  const libraryBooks = document.getElementById("libraryBooks");
+  const bookInfo = `
+      <div class="searchResultDiv">
+        <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover">
+        <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
+        <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
+        <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
       </div>
     `;
-  resultsContainer.appendChild(bookInfo);
-}
-
-// Function to save JSON data to a file
-function saveJSONToFile(data, filename) {
-  // Create a Blob object containing the JSON data
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: "application/json",
-  });
-
-  // Create a temporary URL for the Blob
-  const url = URL.createObjectURL(blob);
-
-  // Create an anchor element (<a>) to simulate a click and trigger the download
-  const a = document.createElement("a");
-  a.href = url; // Set the href attribute to the Blob URL
-  a.download = filename; // Set the download attribute to the desired filename
-
-  // Append the anchor element to the document body
-  document.body.appendChild(a);
-
-  // Simulate a click on the anchor element to trigger the download
-  a.click();
-
-  // Revoke the Blob URL to release the resources associated with it
-  URL.revokeObjectURL(url);
-
-  // Remove the anchor element from the document body after the download is complete
-  document.body.removeChild(a);
-}
-
-// function to save book information to a JSON file
-function saveBook() {
-  const bookInfo = {
-    title: document.getElementById("bookTitle").innerText,
-    authors: document.getElementById("bookAuthors").innerText,
-    description: document.getElementById("bookDescription").innerText,
-    publishedDate: document.getElementById("bookPublishedDate").innerText,
-    isbn: document.getElementById("bookISBN").innerText,
-    cover: document.getElementById("bookCover").src,
-  };
-  saveJSONToFile(bookInfo, "book_info.json");
-  alert("Book saved!");
-}
-
-// Pre-set login check //
-function check() {
-  let user = document.getElementById("username").value;
-  let password = document.getElementById("password").value;
-
-  if(user === "user1" && password === "teamP"){
-    window.location.href='library.html';
-  }
-  else{
-    prompt("Username and/or password is incorrect");
-  }
+  libraryBooks.innerHTML += bookInfo;
 }
 
 /*
@@ -196,5 +190,7 @@ function check() {
 [1]: I used the Google Books API Documentation to learn how to use the API. URL:https://developers.google.com/books/docs/overview
 
 [2]: I learned how to get the window URL from this page: https://stackoverflow.com/questions/1034621/get-the-current-url-with-javascript
+
+[3]: I learned how access and save to local storage: https://stackoverflow.com/questions/34493531/how-to-store-and-retrieve-json-data-into-local-storage, https://www.w3schools.com/jsref/tryit.asp?filename=tryjson_store
 
 */

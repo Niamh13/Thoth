@@ -4,25 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="CSS/styles.css" />
-    <title>Search</title>
+    <title>My Library</title>
   </head>
-  <body>
+  <body onload="loadLibrary()">
     <nav id="nav">
       <a class="navHead">Thoth</a>
       <a class="navLink" href="search.html">Search</a>
       <a class="navLink" href="library.html">Library</a>
     </nav>
 
-    <h1 class="heading">Search</h1>
+    <h1 class="heading">My Library</h1>
 
-    <div id="searchDiv">
-      <input type="text" id="search" />
-      <button id="searchButton" class="button" onclick="search()">
-        Search
-      </button>
-    </div>
-
-    <div id="searchResults" class="grid-item"></div>
+    <div id="libraryBooks" class="grid-item"></div>
 
     <script src="JavaScript/script.js"></script>
   </body>
