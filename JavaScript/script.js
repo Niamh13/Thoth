@@ -19,7 +19,6 @@ function search() {
   }
 }
 
-
 /*
 =======================
 ====DISPLAY RESULTS====
@@ -45,7 +44,7 @@ function displayResults(books) {
 
 // Reference 2
 function viewBook(bookId) {
-  window.location.href = `book-details.html?id=${bookId}`;
+  window.location.href = `book.html?id=${bookId}`;
 }
 
 /*
@@ -182,43 +181,7 @@ function displayBook(book) {
     `;
   libraryBooks.innerHTML += bookInfo;
 }
-
-// function to navigate to book page
-function bookPage(id) {
-  // Reference 2
-  const encodedId = encodeURIComponent(id);
-  const bookPage = `book.html?id=${encodedId}`;
-  window.location.href = bookPage;
-}
-
-// function to get ISBN from URL and perform a search
-function getURL() {
-  const currentUrl = new URL(window.location.href);
-  let id = currentUrl.searchParams.get("id");
-  searchID(id);
-}
-
-// function to search for book by ISBN
-function searchID(id) {
-  const searchInput = id;
-
-  // Construct the API URL
-  const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
-    searchInput
-  )}&orderBy=relevance&key=${apiKey}`;
-
-  // Make the API request
-  fetch(apiUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      displayBookInfo(data.items);
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-}
-
+/*
 ------------------------------
 ----------Navigation----------
 ------------------------------
@@ -286,5 +249,7 @@ function check() {
 [1]: I used the Google Books API Documentation to learn how to use the API. URL:https://developers.google.com/books/docs/overview
 
 [2]: I learned how to get the window URL from this page: https://stackoverflow.com/questions/1034621/get-the-current-url-with-javascript
+
+[3]: I learned how access and save to local storage: https://stackoverflow.com/questions/34493531/how-to-store-and-retrieve-json-data-into-local-storage, https://www.w3schools.com/jsref/tryit.asp?filename=tryjson_store
 
 */
