@@ -40,12 +40,17 @@
       <a class="link" href="index.html">Home</a>
       <a class="link" href="search.html">Search</a>
     </div>
-    <div class="search">
-      <input id="searchBar" type="text" id="searchInput" placeholder="Search for a book, author or ISBN" />
-      <br />
-      <button id="searchButton" onclick="searchBooks()">Search</button>
+     <h1 class="heading">Search</h1>
+
+    <div id="searchDiv">
+      <input type="text" id="search" />
+      <button id="searchButton" class="button" onclick="search()">
+        Search
+      </button>
     </div>
-    <div id="results"></div>
+
+    <div id="searchResults" class="grid-item"></div>
+
     <script src="JavaScript/script.js"></script>
   </body>
 </html>
