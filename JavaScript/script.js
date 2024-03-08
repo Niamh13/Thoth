@@ -222,7 +222,7 @@ function logout() {
 ------------------------------
 ----------Login---------------
 ------------------------------
-*/
+
 document.addEventListener('DOMContentLoaded', (event) => {
   document.getElementById('AccForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -240,7 +240,7 @@ function check() {
   }
 }
 
-
+*/
 /*
 ------------------------------
 ----------REFERENCES----------
