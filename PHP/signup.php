@@ -28,7 +28,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     else{
         $query1 = "INSERT INTO login VALUE('$username', '$password', '$name', '$email'); CREATE TABLE '$username'(bookId VARCHAR (255), PRIMARY KEY (bookId));";
+        $action = $conn->query($query1);
+        if($action===TRUE){
+            echo'<script type="text/javascript">alert("Success");</script>';
+        }
+        else{
+            echo'<script type="text/javascript">alert("Fail");</script>';
+        }
         header('Location: login.html');
         exit();
     }
 }
+
