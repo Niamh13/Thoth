@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     //database connect
     $host = "localhost";
     $dbusername = "root";
-    $dbpassword = "Timmy2013"; //depends on password
+    $dbpassword = ""; //depends on password
     $dbname = "auth";
 
     $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
@@ -27,16 +27,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         exit();
     }
     else{
-        $query1 = "INSERT INTO login VALUE('$username', '$password', '$name', '$email'); CREATE TABLE '$username'(bookId VARCHAR (255), PRIMARY KEY (bookId));";
-        $action = $conn->query($query1);
-        if($action===TRUE){
+        $query1 = "INSERT INTO login VALUE('$username', '$password', '$name', '$email');";
+        $query1 = "CREATE TABLE '$username'(bookId VARCHAR (255), PRIMARY KEY (bookId));";
+        if($conn->query($query1)===TRUE){
             echo'<script type="text/javascript">alert("Success");</script>';
+            header('Location: login.html');
+            exit();
         }
         else{
             echo'<script type="text/javascript">alert("Fail");</script>';
+            exit();
         }
-        header('Location: login.html');
-        exit();
+        
     }
 }
 
