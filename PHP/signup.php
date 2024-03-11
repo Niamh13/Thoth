@@ -18,17 +18,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         die("Connection failed: ".$conn->connect_error);
     }
 
-    $query = "INSERT INTO login VALUE('$username', '$password', '$name', '$email'); CREATE TABLE '$username'(bookId VARCHAR (255), PRIMARY KEY (bookId)); SELECT * FROM login WHERE username = '$username'";
+    $query = "SELECT * FROM login WHERE username = '$username';";
 
     $result = $conn->query($query);
-    
 
     if($result->num_rows == 1){
-        header('Location: Login.html');
+        echo'<script type="text/javascript">alert("Username has already in-use");</script>';
         exit();
     }
     else{
-        echo'<script type="text/javascript">alert("Username has already in-use");</script>';
+        $query1 = "INSERT INTO login VALUE('$username', '$password', '$name', '$email'); CREATE TABLE '$username'(bookId VARCHAR (255), PRIMARY KEY (bookId));";
+        header('Location: login.html');
         exit();
     }
 }
