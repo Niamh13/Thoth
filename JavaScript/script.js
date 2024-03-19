@@ -34,7 +34,9 @@ function displayResults(books) {
           <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover">
           <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
           <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
-          <button class="saveButton" onclick="saveToLibrary('${book.id}')">Save to Library</button>
+          <form method="post">
+            <button class="saveButton" name="savebutton">Save to Library</button>
+          </form>
           <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
         </div>
     `;
@@ -55,6 +57,13 @@ function viewBook(bookId) {
 function getBook() {
     const urlParams = new URLSearchParams(window.location.search);
     const bookId = urlParams.get("id");
+    //setting var url to a cookie to use in php file
+    const url = fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`).then((response) => response.json()).then((data) => {
+        displayBookDetails(data);
+        console.log(data);
+    })
+    .catch((error) => console.error("Error fetching book details:", error));;
+    document.cookie="url";
 
     fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
         .then((response) => response.json())
@@ -78,9 +87,11 @@ function getBook() {
         <p><strong>Page Count:</strong> ${book.volumeInfo.pageCount}</p>
         <p><strong>Categories:</strong> ${book.volumeInfo.categories}</p>
         <p><strong>Rating:</strong> ${book.volumeInfo.averageRating}</p>
-        <button class="bookPageSaveButton" onclick="saveToLibrary('${book.id}')">
-          <strong>Save to Library</strong>
-        </button>
+        <form method="post">
+            <button class="bookPageSaveButton" name="savebutton">
+                <strong>Save to Library</strong>
+            </button>
+        </form>
       </div>
       <div class="rightContent">
         <h2 id="bookDescHead">Description</h2>
