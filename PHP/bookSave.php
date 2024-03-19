@@ -62,3 +62,13 @@ function saveBook(){
 
 
 }
+
+
+/*
+------------------------------
+----------REFERENCES----------
+------------------------------
+
+[1]: I learned how to save and delete books for the api to the database, as well as echoing variables. URL: https://medium.com/@miladev95/how-to-make-crud-rest-api-in-php-with-mysql-5063ae4cc89
+
+*/
