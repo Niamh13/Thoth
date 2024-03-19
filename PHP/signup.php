@@ -28,7 +28,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     else{
         $query1 = "INSERT INTO login VALUE('$username', '$password', '$name', '$email');";
-        $query1 = "CREATE TABLE '$username'(bookId VARCHAR (255), PRIMARY KEY (bookId));";
+        $conn->query($query1);
+        $query1 = "CREATE TABLE '$username'(bookId VARCHAR (255));";
         if($conn->query($query1)===TRUE){
             echo'<script type="text/javascript">alert("Success");</script>';
             header('Location: login.html');
