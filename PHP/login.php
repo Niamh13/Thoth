@@ -22,8 +22,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $result = $conn->query($query);
 
-    if($result->num_rows == 1){
-        echo'<script type="text/javascript">alert("Username has already in-use");</script>';
+    if($result->num_rows == 0){
+        echo'<script type="text/javascript">alert("Username not found");</script>';
         $conn->close();
         exit();
     }
