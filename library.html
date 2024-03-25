@@ -47,5 +47,10 @@
 <div id="libraryBooks" class="grid-item"></div>
 
 <script src="JavaScript/script.js"></script>
+<!--php connection-->
+<?php
+include('display.php');
+?>
+<script>$(window).load(function(){$('#libraryBooks').load('/php/display.php');})</script>
 </body>
 </html>
