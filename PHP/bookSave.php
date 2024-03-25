@@ -40,7 +40,12 @@ function saveBook(){
 
             $query1 = "INSERT INTO '$username' (bookId) VALUES ('$bookId')       ";    
             $query = $conn->prepare('INSERT INTO books (bookId, title, image, author, publisher, publishDate, pageCount, category, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $query->execute([$title, $thumbnail, $author, $publisher, $publishDate, $pageCount, $category, $rating]);
+            if($result->num_rows == 1){
+                echo json_encode(['message' => 'Book already added']);
+            }
+            else{
+                $query->execute([$title, $thumbnail, $author, $publisher, $publishDate, $pageCount, $category, $rating]);
+            }
 
             echo json_encode(['message' => 'Book added successfully']);
             if (mysqli_query($conn, $query1)){
@@ -58,6 +63,7 @@ function saveBook(){
 
             echo json_encode(['message'=> 'Book deleted']);
             break;
+            
     }
 
 
@@ -72,3 +78,4 @@ function saveBook(){
 [1]: I learned how to save and delete books for the api to the database, as well as echoing variables. URL: https://medium.com/@miladev95/how-to-make-crud-rest-api-in-php-with-mysql-5063ae4cc89
 
 */
+
