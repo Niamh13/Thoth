@@ -27,7 +27,7 @@
             <a href="#">Customer Service</a>
             <a href="#">Settings</a>
             <!-- Logout link with inline onclick event to call logout function -->
-            <a onclick="logout()" href="index.html">Logout</a>
+            <a name="logoutButton" method="delete" href="index.html">Logout</a>
         </div>
     </div>
 
@@ -50,7 +50,9 @@
 <!--php connection-->
 <?php
 include('display.php');
+include('login.php');
 ?>
 <script>$(window).load(function(){$('#libraryBooks').load('/php/display.php');})</script>
+
 </body>
 </html>

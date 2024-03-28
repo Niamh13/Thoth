@@ -1,5 +1,9 @@
 <?php
 
+session_start();
+
+iclude("connection.php");
+
 if(isset($_POST['savebutton'])){
     saveBook();
 }
@@ -7,19 +11,8 @@ if(isset($_POST['savebutton'])){
 function saveBook(){
     // echo variable username
     include login.php;
-    echo $username;
-   
-    //database connect
-    $host = "localhost";
-    $dbusername = "root";
-    $dbpassword = ""; //depends on password
-    $dbname = "auth";
-    
-    $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
-    
-    if($conn->connect_error){
-        die("Connection failed: ".$conn->connect_error);
-    }
+    echo $_SESSION["username"]; 
+    $username = $_SESSION["username"];
 
     header('Content-Type: application/json');
 

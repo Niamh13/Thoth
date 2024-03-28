@@ -1,4 +1,8 @@
 <?php
+session_start();
+
+include("connection.php");
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     // retrieve data
     $name = $_POST['fullName'];
@@ -6,17 +10,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $email = $_POST['email'];
     $password = $_POST['confirmPassword'];
 
-    //database connect
-    $host = "localhost";
-    $dbusername = "root";
-    $dbpassword = ""; //depends on password
-    $dbname = "auth";
+    //starting session + variables
+    $_SESSION["username"] = $username;
 
-    $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
-
-    if($conn->connect_error){
-        die("Connection failed: ".$conn->connect_error);
-    }
+   
 
     $query = "SELECT * FROM login WHERE username = '$username';";
 
@@ -25,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if($result->num_rows == 0){
         echo'<script type="text/javascript">alert("Username not found");</script>';
         $conn->close();
-        exit();
+        die;
     }
     else{
         $query1 = "INSERT INTO login VALUE('$username', '$password', '$name', '$email');";
@@ -34,13 +31,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo'<script type="text/javascript">alert("Success");</script>';
             header('Location: login.html');
             $conn->close();
-            exit();
+            die;
         }
         else{
             echo'<script type="text/javascript">alert("Fail");</script>';
             $conn->close();
-            exit();
+            die;
         }
         
     }
+}
+
+if(isset($_POST['logoutButton'])){
+    logOut();
+}
+
+function logOut(){
+    unset($_SESSION['username']);
+    header("Location: login.html");
+    die;
 }
