@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="CSS/style.css" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="CSS/styles.css"/>
     <title>Book Page</title>
-  </head>
-  <body onload="getURL()">
-    <nav class="navbar">
-      <a href="search.html">Search</a>
-    </nav>
-    <div class="container">
-      <div id="bookInfo" class="book-wrapper"></div>
+</head>
+<body onload="getBook()">
+<!-- Navigation bar section -->
+<div class="TopNav">
+    <!-- Navigation links -->
+    <a class="link" href="index.html">Home</a>
+    <a class="link" href="search.html">Search</a>
+
+    <!-- Dropdown menu for user profile and settings -->
+    <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">
+            <!-- User icon in the dropdown button -->
+            <img src="Images/user.png" alt="User" style="vertical-align: middle;">
+        </button>
+
+        <!-- Dropdown content hidden by default shown on click -->
+        <div class="DropdownContent" id="DropdownContent">
+            <a href="#">My Profile</a>
+            <a href="library.html">My Library</a>
+            <a href="#">Customer Service</a>
+            <a href="#">Settings</a>
+            <!-- Logout link with inline onclick event to call logout function -->
+            <a onclick="logout()" href="index.html">Logout</a>
+        </div>
     </div>
 
-    <div>
-      <button onclick="saveBook()">Save Book</button>
-    </div>
+    <!-- Hamburger icon for mobile navigation menu -->
+    <a href="javascript:void(0);" class="icon" onclick="openSideNav()">&#9776;</a>
+</div>
 
-    <script src="JavaScript/script.js"></script>
-  </body>
+<!-- Side navigation menu hidden by default -->
+<div id="SideNav" class="SideNav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
+    <a class="link" href="index.html">Home</a>
+    <a class="link" href="search.html">Search</a>
+</div>
+<div class="container">
+    <div id="bookInfo" class="book-wrapper"></div>
+</div>
+<div id="bookDetails"></div>
+<script src="JavaScript/script.js"></script>
+<!--php connection-->
+<?php
+include('bookSave.php');
+?>
+</body>
 </html>

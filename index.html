@@ -1,8 +1,8 @@
 <html>
 <head>
-    <title>Books API Example</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Thoth</title>
     <link href="CSS/styles.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -40,23 +40,36 @@
     <a class="link" href="index.html">Home</a>
     <a class="link" href="search.html">Search</a>
 </div>
-<h1 class="heading">Search</h1>
 
-<div id="searchDiv">
-    <input type="text" id="search"/>
-    <button id="searchButton" class="button" onclick="search()">
-        Search
-    </button>
+<!--Main page Content-->
+<div class="indexContent">
+    <h1>Personal Library</h1>
+    <div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elementum ac eros eget dictum. Nulla mollis
+            justo dapibus turpis rutrum, in maximus tellus consectetur. Aliquam at arcu id tortor sodales ultrices in
+            non lectus. Nam ut nulla vel elit tincidunt cursus. Proin ut est tempor, varius elit bibendum, laoreet
+            velit. Vestibulum rutrum iaculis arcu sit amet vestibulum. Vestibulum lacus risus, feugiat pulvinar pulvinar
+            in, vestibulum sit amet erat. In eget nunc vitae nisi vulputate faucibus. Pellentesque egestas, est vitae
+            laoreet varius, neque augue blandit leo, fringilla vulputate metus massa nec orci. Integer ac fermentum
+            urna. Ut mattis turpis nec lectus pellentesque sodales. Suspendisse faucibus pretium est sed pharetra.</p>
+    </div>
+    <!-- Link to the Login and signup page-->
+    <div class="indexButton">
+        <a href="Signup.html">
+            <button class="AccButton">Sign Up Now</button>
+        </a>
+        <span>or</span>
+        <a href="Login.html">
+            <button class="AccButton">Login</button>
+        </a>
+    </div>
 </div>
 
-<div id="searchResults" class="grid-item"></div>
-
-
+<!-- Main img-->
+<div indexImgContainer>
+    <img class="indexImg" src="Images/main.png" alt="index">
+</div>
 
 <script src="JavaScript/script.js"></script>
-<!--php connection-->
-<?php
-include('bookSave.php');
-?>
 </body>
 </html>

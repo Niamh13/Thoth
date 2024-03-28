@@ -1,11 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Books API Example</title>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="CSS/styles.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="CSS/styles.css"/>
+    <title>Library Page</title>
 </head>
-<body>
+<body onload="loadLibrary()">
 <!-- Navigation bar section -->
 <div class="TopNav">
     <!-- Navigation links -->
@@ -26,7 +27,7 @@
             <a href="#">Customer Service</a>
             <a href="#">Settings</a>
             <!-- Logout link with inline onclick event to call logout function -->
-            <a onclick="logout()" href="index.html">Logout</a>
+            <a name="logoutButton" method="delete" href="index.html">Logout</a>
         </div>
     </div>
 
@@ -40,23 +41,18 @@
     <a class="link" href="index.html">Home</a>
     <a class="link" href="search.html">Search</a>
 </div>
-<h1 class="heading">Search</h1>
 
-<div id="searchDiv">
-    <input type="text" id="search"/>
-    <button id="searchButton" class="button" onclick="search()">
-        Search
-    </button>
-</div>
+<h1 class="heading">My Library</h1>
 
-<div id="searchResults" class="grid-item"></div>
-
-
+<div id="libraryBooks" class="grid-item"></div>
 
 <script src="JavaScript/script.js"></script>
 <!--php connection-->
 <?php
-include('bookSave.php');
+include('display.php');
+include('login.php');
 ?>
+<script>$(window).load(function(){$('#libraryBooks').load('/php/display.php');})</script>
+
 </body>
 </html>
