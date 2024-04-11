@@ -10,10 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION["username"] = $username;
 
     // database connect
-    $host = "localhost";
-    $dbusername = "root";
-    $dbpassword = "Timmy2013"; // depends on password
-    $dbname = "auth";
+    $host = "sql109.infinityfree.com";
+    $dbusername = "if0_35864125";
+    $dbpassword = "superThoth"; // depends on password
+    $dbname = "if0_35864125_auth";
 
     $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
 
@@ -32,12 +32,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             // Credentials match, log in
-            header('Location: /Thoth-working-php 3/library.html');
+            header('Location: /library.html');
             exit();
             // Perform additional actions for successful login
         } else {
             // Credentials don't match
-            echo '<script type="text/javascript">alert("Incorrect username or password");</script>';
+            echo '<script type="text/javascript">alert("Incorrect username or password"); window.location.href = "/login.html"</script>';
+
         }
     } else {
         // Table doesn't exist
