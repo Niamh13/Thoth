@@ -501,3 +501,124 @@ SEARCH
 .heading {
     text-align: center;
 }
+
+/*
+------------------
+-----CONTACT PAGE----
+------------------
+*/
+
+.contact {
+	width: 950px;
+	margin: 80px auto;
+	color: white;
+	line-height: 1.5;
+}
+
+.contact-banner {
+    color: black;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: auto;
+}
+
+.contact-banner h1 {
+    font-size: 35px; 
+    margin: 0; 
+}
+
+.contact-content {
+	display: flex;
+	margin-top: 40px;
+}
+
+.contact-icon {
+	background-color: white;
+	border-radius: 30px;
+	padding: 15px;
+	vertical-align: top;
+    width: 20px;
+    height: 20px;
+}
+
+.contact-info {
+	display: inline-block;
+	padding: 4px 20px 0px 20px;
+}
+
+.contact-address {
+	margin-top: 40px;
+    color: #000;
+}
+
+.contact-left {
+	width: 530px;
+}
+
+.contact-right{
+	flex: 1 1 auto;
+	background-color: white;
+}
+
+.contact-form {
+	color: #000;
+	padding: 40px;
+    margin: auto;
+}
+
+.contact-info-title {
+	color: #5c6bc0;
+}
+
+.contact-form-line {
+    margin-bottom: 20px; 
+}
+
+.contact-form textarea {
+    height: 150px; 
+    width: 400px;
+}
+
+.contact-send {
+    margin-top: 20px;
+}
+
+.contact-form-line label{
+	padding-bottom: 5px;
+    display: block; 
+}
+
+@media all and (max-width: 1024px) {
+	.contact-container {
+		width: auto;
+		padding: 30px;
+	}
+	 .contact-left {
+		width: 360px;
+	} 
+}
+
+@media all and (max-width: 700px) {
+	.contact-content {
+		display: inline-block;
+	}
+	.contact-left {
+		margin-left: 20px;
+	} 
+	.contact-right{
+    margin-top: 20px;
+    margin-left: 20px;
+	width:100%;
+	}
+
+    
+}
+
+
+@media all and (max-width: 500px) {
+	.contact-container {
+		padding: 10px;
+	}
+
+}
