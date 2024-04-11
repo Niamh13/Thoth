@@ -5,7 +5,7 @@
 */
 function search() {
     const searchInput = document.getElementById("search").value;
-    if (searchInput == "") {
+    if (searchInput === "") {
         alert("Please enter a search");
     } else {
         // Reference 1
@@ -31,10 +31,10 @@ function displayResults(books) {
     books.forEach((book) => {
         const bookInfo = `
         <div class="searchResultDiv">
-          <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover">
+          <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover" alt="book cover">
           <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
           <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
-          <form> 
+          <form method="POST">
             <button class="saveButton" name="savebutton">Save to Library</button>
           </form>
           <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
@@ -103,19 +103,23 @@ function getBook() {
       <h1 id="userReviewTitle">User Reviews</h1>
       <div class="userReviews">
         <div class="userReview">
-          <p class="userReviewUsername"><strong>User 128482</strong></p>
+          <p class="userReviewUsername"><strong>SuperAwesomeMegaJosh</strong></p>
+          <p><strong>Rating:</strong>⭐⭐⭐⭐️</p>
+          <p class="userReviewText">Maecenas tincidunt lacinia dolor non semper. Quisque pharetra, eros at posuere feugiat, ex dui ultrices justo, id maximus tortor ligula ut ligula. Etiam pretium faucibus nisl, sed imperdiet nulla volutpat eu. Sed convallis, orci quis condimentum volutpat, dolor enim hendrerit nisi, sed tristique enim turpis in eros. Donec et rhoncus leo, non sodales metus. Vestibulum sagittis quam magna. Morbi sit amet posuere ipsum. Morbi mattis augue eu lorem scelerisque iaculis sed at dolor. Proin lacinia lacinia quam, eget dictum est porttitor nec. In aliquet augue tortor, a vulputate mi lobortis a. Etiam feugiat lectus nulla, a ultrices magna egestas sit amet. Nam vel magna lectus. Proin et molestie arcu. Nulla iaculis tincidunt dolor eget volutpat. Maecenas sodales porta elit at accumsan. Aliquam nec varius turpis, ut luctus neque.</p>
+        </div>
+        <div class="userReview">
+          <p class="userReviewUsername"><strong>Niamh</strong></p>
+          <p><strong>Rating:</strong>⭐⭐</p>
+          <p class="userReviewText">Etiam id dui non urna ornare dignissim nec vel massa. Praesent non dictum lacus. In varius fringilla vehicula. Suspendisse venenatis ut elit ac commodo. Sed sed ligula accumsan erat dictum ullamcorper vel a tellus. Donec facilisis fermentum fringilla. Nam eu ultricies turpis. Pellentesque tristique varius nisl ac facilisis. Morbi tellus ex, malesuada ac suscipit non, tincidunt in neque. Quisque ut tellus libero. Proin mattis, risus non convallis facilisis, arcu urna lobortis lectus, vel malesuada nunc felis eget eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae</p>
+        </div>
+        <div class="userReview">
+          <p class="userReviewUsername"><strong>Dongyi</strong></p>
+          <p><strong>Rating:</strong>⭐️</p>
           <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
         </div>
         <div class="userReview">
-          <p class="userReviewUsername"><strong>User 128482</strong></p>
-          <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
-        </div>
-        <div class="userReview">
-          <p class="userReviewUsername"><strong>User 128482</strong></p>
-          <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
-        </div>
-        <div class="userReview">
-          <p class="userReviewUsername"><strong>User 128482</strong></p>
+          <p class="userReviewUsername"><strong>Ata</strong></p>
+          <p><strong>Rating:</strong>⭐⭐⭐⭐⭐️</p>
           <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
         </div>
       </div>
@@ -181,11 +185,11 @@ function saveToLibrary(bookId) {
 //     });
 // }
 
- function libraryLoad() {
+function libraryLoad() {
 
     $.ajax()
     console.log(php_array);
- }
+}
 
 function libraryLoad() {
     $(document).ready(function () {
