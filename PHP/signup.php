@@ -8,10 +8,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $passwordC = $_POST['confirmPassword'];
 
     // database connect
-    $host = "localhost";
-    $dbusername = "root";
-    $dbpassword = "Timmy2013"; //depends on password
-    $dbname = "auth";
+    $host = "sql109.infinityfree.com";
+    $dbusername = "if0_35864125";
+    $dbpassword = "superThoth"; //depends on password
+    $dbname = "if0_35864125_auth";
 
     $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
 
@@ -24,17 +24,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($query);
 
         if ($result->num_rows > 0) {
-            echo '<script type="text/javascript">alert("Username is already in use");</script>';
+            echo '<script type="text/javascript">alert("Username is already in use"); window.location.href = "/signup.html";</script>';
         } else {
             $query1 = "INSERT INTO login VALUES ('$username', '$password', '$name', '$email')";
             if ($conn->query($query1) === TRUE) {
                 $createTableQuery = "CREATE TABLE `$username` (bookId VARCHAR(255))";
                 if ($conn->query($createTableQuery) === TRUE) {
                     //echo '<script type="text/javascript">alert("Success");</script>';
-                    header('Location: /Thoth-working-php 3/login.html');
+                    header('Location: /login.html');
                     exit();
                 } else {
                     echo '<script type="text/javascript">alert("Fail to create user table");</script>';
+                    header('Location: /signup.html');
                 }
             } else {
                 echo '<script type="text/javascript">alert("Fail to insert user data");</script>';
