@@ -34,7 +34,7 @@ function displayResults(books) {
           <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover">
           <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
           <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
-          <form method="post">
+          <form> 
             <button class="saveButton" name="savebutton">Save to Library</button>
           </form>
           <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
@@ -62,8 +62,9 @@ function getBook() {
         displayBookDetails(data);
         console.log(data);
     })
-    .catch((error) => console.error("Error fetching book details:", error));;
-    document.cookie="url";
+        .catch((error) => console.error("Error fetching book details:", error));
+    ;
+    document.cookie = "url";
 
     fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
         .then((response) => response.json())
@@ -156,29 +157,49 @@ function saveToLibrary(bookId) {
 =====USERS LIBRARY=====
 =======================
 */
-function loadLibrary() {
-    const libraryBooks = document.getElementById("libraryBooks");
-    libraryBooks.innerHTML = "";
+// function loadLibrary() {
+//     const libraryBooks = document.getElementById("libraryBooks");
+//     libraryBooks.innerHTML = "";
+//
+//     // fetches the library array from local storage, or creates one if it doesn't exist.
+//     const library = JSON.parse(localStorage.getItem("library")) || [];
+//
+//     if (library.length === 0) {
+//         // if the user's library is empty, prints a message to the screen.
+//         libraryBooks.innerHTML = "<p>No books saved in your library.</p>";
+//         return;
+//     }
+//
+//     library.forEach((bookId) => {
+//         fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
+//             .then((response) => response.json())
+//             .then((data) => {
+//                 displayBook(data);
+//                 console.log(data);
+//             })
+//             .catch((error) => console.error("Error fetching book details:", error));
+//     });
+// }
 
-    // fetches the library array from local storage, or creates one if it doesn't exist.
-    const library = JSON.parse(localStorage.getItem("library")) || [];
+ function libraryLoad() {
 
-    if (library.length === 0) {
-        // if the user's library is empty, prints a message to the screen.
-        libraryBooks.innerHTML = "<p>No books saved in your library.</p>";
-        return;
-    }
+    $.ajax()
+    console.log(php_array);
+ }
 
-    library.forEach((bookId) => {
-        fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                displayBook(data);
-                console.log(data);
-            })
-            .catch((error) => console.error("Error fetching book details:", error));
+function libraryLoad() {
+    $(document).ready(function () {
+        $.ajax({
+            url: "/PHP/display.php", // Change to the correct URL of your PHP file
+            dataType: "json",
+            success: function (data) {
+                console.log(data); // This will log the book IDs array received from the server
+                // Now you can do whatever you want with the data, such as updating the UI
+            }
+        });
     });
 }
+
 
 function displayBook(book) {
     const libraryBooks = document.getElementById("libraryBooks");
@@ -188,6 +209,9 @@ function displayBook(book) {
         <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
         <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
         <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
+        <form method="DELETE">
+        <button class="saveButton" name="saveButton">Delete from Library</button>
+        </form>
       </div>
     `;
     libraryBooks.innerHTML += bookInfo;
@@ -231,6 +255,12 @@ function logout() {
     alert("You have been logged out.");
     window.location.href = 'index.html';
 }
+
+/*function profile() {
+    var php_username = "<?php include login.php; echo $username; ?>";
+    console.log(php_username);
+}*/
+
 
 /*
 ------------------------------
