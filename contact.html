@@ -1,0 +1,116 @@
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Thoth</title>
+    <!-- Link to the external CSS file -->
+    <link href="CSS/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<!-- Navigation bar section -->
+<div class="TopNav">
+    <!-- Navigation links -->
+    <a class="link" href="index.html">Home</a>
+    <a class="link" href="search.html">Search</a>
+
+    <!-- Dropdown menu for user profile and settings -->
+    <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">
+            <!-- User icon in the dropdown button -->
+            <img src="Images/user.png" alt="User" style="vertical-align: middle;">
+        </button>
+
+        <!-- Dropdown content hidden by default shown on click -->
+        <div class="DropdownContent" id="DropdownContent">
+            <a href="#">My Profile</a>
+            <a href="library.html">My Library</a>
+            <a href="contact.html">Contact</a>
+            <a href="#">Settings</a>
+            <!-- Logout link with inline onclick event to call logout function -->
+            <a onclick="logout()" href="index.html">Logout</a>
+        </div>
+    </div>
+
+    <!-- Hamburger icon for mobile navigation menu -->
+    <a href="javascript:void(0);" class="icon" onclick="openSideNav()">&#9776;</a>
+</div>
+
+<!-- Side navigation menu hidden by default -->
+<div id="SideNav" class="SideNav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
+    <a class="link" href="index.html">Home</a>
+    <a class="link" href="search.html">Search</a>
+</div>
+
+<!-- contact us form -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contact</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="contact">
+		<div class="contact-banner">
+			<h1>Contact Us</h1>
+		</div>
+		<div class="contact-content">
+			<div class="contact-left">
+				<div class="contact-address">
+					<img alt="location" src="images/map.png" class="contact-icon">
+					<div class="contact-info">
+						<div class="contact-info-title">Address</div>
+						<div>Mayor Street Lower,</div>
+						<div>Dublin1, Dublin,</div>
+						<div>D01 TP13</div>
+					</div>
+				</div>
+				<div class="contact-address">
+					<img alt="phone" src="images/phone.png" class="contact-icon">
+					<div class="contact-info">
+						<div class="contact-info-title">Phone</div>
+						<div>0830123456</div>
+					</div>
+				</div>
+				<div class="contact-address">
+					<img alt="email" src="images/email.png" class="contact-icon">
+					<div class="contact-info">
+						<div class="contact-info-title">Email</div>
+						<div>thoth@gmail.com</div>
+					</div>
+				</div>
+			</div>
+			<div class="contact-right">
+					<div class="contact-form">
+						<h2>Send Message</h2>
+						<form id="commentForm" onsubmit="return contactForm();">
+							<div class="contact-form-line">
+								<label for="fullName">Name *</label>
+								<input type="text" id="fullName" name="fullName" required>
+							</div>
+							<div class="contact-form-line">
+								<label for="email">Email *</label>
+								<input type="email" id="email" name="email" required>
+							</div>
+							<div class="contact-form-line">
+								<label for="msg">Type your message..</label>
+								<textarea id="msg" name="msg" required></textarea>
+							</div>
+
+							<div class="links">
+								<button type="submit" class="AccButton">Send</button>
+							</div>
+						</form>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- External JavaScript file-->
+<script src="JavaScript/script.js"></script>
+
+</body>
+</html>
