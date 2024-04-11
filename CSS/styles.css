@@ -509,7 +509,7 @@ SEARCH
 */
 
 .contact {
-	width: 950px;
+	max-width: 950px;
 	margin: 80px auto;
 	color: white;
 	line-height: 1.5;
