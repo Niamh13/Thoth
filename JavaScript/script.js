@@ -288,7 +288,16 @@ function logout() {
 //     }
 // }
 
+/*
+------------------------------
+----------contact---------------
+------------------------------
+*/
+function contactForm() {
 
+    alert("Your message has been sent successfully!");
+    return false;
+}
 /*
 ------------------------------
 ----------REFERENCES----------
