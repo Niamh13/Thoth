@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8"/>
@@ -12,8 +12,8 @@
 <!-- Navigation bar section -->
 <div class="TopNav">
     <!-- Navigation links -->
-    <a class="link" href="index.html">Home</a>
-    <a class="link" href="search.html">Search</a>
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
 
     <!-- Dropdown menu for user profile and settings -->
     <div class="dropdown">
@@ -24,12 +24,12 @@
 
         <!-- Dropdown content hidden by default shown on click -->
         <div class="DropdownContent" id="DropdownContent">
-            <a href="#">My Profile</a>
-            <a href="library.html">My Library</a>
+            <a onclick="profile()" href="#">My Profile</a>
+            <a href="/Beta2/library.html">My Library</a>
             <a href="#">Customer Service</a>
             <a href="#">Settings</a>
             <!-- Logout link with inline onclick event to call logout function -->
-            <a onclick="logout()" href="index.html">Logout</a>
+            <a onclick="logout()" href="Beta2/index.html">Logout</a>
         </div>
     </div>
 
@@ -40,8 +40,8 @@
 <!-- Side navigation menu hidden by default -->
 <div id="SideNav" class="SideNav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
-    <a class="link" href="index.html">Home</a>
-    <a class="link" href="search.html">Search</a>
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
 </div>
 
 <!-- Account login container -->
@@ -62,18 +62,17 @@
         </div>
     </form>
 
-    <form action="PHP/test.php" method="post">
-        <input type="submit" value="Execute PHP">
-    </form>
-
     <!-- Link to the signup page-->
     <div class="AccLink">
-        <span class="SignupText">Don't have an account?</span> <a href="Signup.html">Sign Up Here</a>
+        <span class="SignupText">Don't have an account?</span> <a href="/Beta2/signup.html">Sign Up Here</a>
     </div>
 </div>
 
 <!-- External JavaScript file-->
-<script src="JavaScript/script.js"></script>
+<script src="/Beta2/JavaScript/script.js"></script>
+<?php
+include login.php;
+?>
 </body>
 
 </html>
