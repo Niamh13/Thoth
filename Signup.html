@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8"/>
@@ -10,20 +10,20 @@
 <body>
 <!-- Navigation bar section -->
 <div class="TopNav">
-    <a class="link" href="index.html">Home</a>
-    <a class="link" href="search.html">Search</a>
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
 
     <div class="dropdown">
         <button class="dropbtn" onclick="toggleDropdown()">
-            <img src="Images/user.png" alt="User" style="vertical-align: middle;">
+            <img src="/Beta2/Images/user.png" alt="User" style="vertical-align: middle;">
         </button>
 
         <div class="DropdownContent" id="DropdownContent">
-            <a href="#">My Profile</a>
-            <a href="library.html">My Library</a>
+            <a onclick="profile()" href="#">My Profile</a>
+            <a href="/Beta2/library.html">My Library</a>
             <a href="#">Customer Service</a>
             <a href="#">Settings</a>
-            <a onclick="logout()" href="index.html">Logout</a>
+            <a onclick="logout()" href="Beta2/index.html">Logout</a>
         </div>
 
     </div>
@@ -33,15 +33,15 @@
 
 <div id="SideNav" class="SideNav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
-    <a class="link" href="index.html">Home</a>
-    <a class="link" href="search.html">Search</a>
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
 </div>
 
 <!-- Signup container -->
 <div class="AccContainer">
     <h2>SIGN UP</h2>
     <!-- Signup form -->
-    <form class="AccForm" action="signup.php" method="post">
+    <form class="AccForm" action="PHP/signup.php" method="post">
 
         <div class="InputGroup">
             <input type="text" id="fullName" name="fullName" placeholder="Full Name" minlength="4" required>
@@ -52,7 +52,8 @@
 
             <input type="password" id="password" name="password" placeholder="Password" minlength="4" required>
 
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" minlength="4" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
+                   minlength="4" required>
         </div>
 
         <!-- Submit button for Signup -->
@@ -63,7 +64,7 @@
     </form>
     <!-- Link to the Login page-->
     <div class="AccLink">
-        <span class="SignupText">Already have an account? </span><a href="Login.html">Login</a>
+        <span class="SignupText">Already have an account? </span><a href="/Beta2/login.html">Login</a>
 
     </div>
 
