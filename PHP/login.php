@@ -6,13 +6,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    // set loggIn
+    $_SESSION["loggIn"] = false;
+
     // starting session + variables
     $_SESSION["username"] = $username;
 
     // database connect
     $host = "sql109.infinityfree.com";
     $dbusername = "if0_35864125";
-    $dbpassword = "superThoth"; // depends on password
+    $dbpassword = "superThoth";
     $dbname = "if0_35864125_auth";
 
     $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
@@ -32,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             // Credentials match, log in
+            $_SESSION["loggIn"] = true;
             header('Location: /library.html');
             exit();
             // Perform additional actions for successful login
@@ -56,5 +60,6 @@ function logOut()
 {
     unset($_SESSION['username']);
     header("Location: login.html");
+    echo '<script>console.log("Logged out Successfully");</script>';
     die;
 }
