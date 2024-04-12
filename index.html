@@ -9,24 +9,24 @@
 <!-- Navigation bar section -->
 <div class="TopNav">
     <!-- Navigation links -->
-    <a class="link" href="index.html">Home</a>
-    <a class="link" href="search.html">Search</a>
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
 
     <!-- Dropdown menu for user profile and settings -->
     <div class="dropdown">
         <button class="dropbtn" onclick="toggleDropdown()">
             <!-- User icon in the dropdown button -->
-            <img src="Images/user.png" alt="User" style="vertical-align: middle;">
+            <img src="Beta2/Images/user.png" alt="User" style="vertical-align: middle;">
         </button>
 
         <!-- Dropdown content hidden by default shown on click -->
         <div class="DropdownContent" id="DropdownContent">
-            <a href="#">My Profile</a>
-            <a href="library.html">My Library</a>
+            <a onclick="profile()" href="#">My Profile</a>
+            <a href="/Beta2/library.html">My Library</a>
             <a href="#">Customer Service</a>
             <a href="#">Settings</a>
             <!-- Logout link with inline onclick event to call logout function -->
-            <a onclick="logout()" href="index.html">Logout</a>
+            <a onclick="logout()" href="Beta2/index.html">Logout</a>
         </div>
     </div>
 
@@ -37,8 +37,8 @@
 <!-- Side navigation menu hidden by default -->
 <div id="SideNav" class="SideNav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
-    <a class="link" href="index.html">Home</a>
-    <a class="link" href="search.html">Search</a>
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
 </div>
 
 <!--Main page Content-->
@@ -55,11 +55,11 @@
     </div>
     <!-- Link to the Login and signup page-->
     <div class="indexButton">
-        <a href="Signup.html">
+        <a href="/Beta2/signup.html">
             <button class="AccButton">Sign Up Now</button>
         </a>
         <span>or</span>
-        <a href="Login.html">
+        <a href="/Beta2/login.html">
             <button class="AccButton">Login</button>
         </a>
     </div>
@@ -67,7 +67,7 @@
 
 <!-- Main img-->
 <div indexImgContainer>
-    <img class="indexImg" src="Images/main.png" alt="index">
+    <img class="indexImg" src="/Beta2/Images/main.png" alt="index">
 </div>
 
 <script src="JavaScript/script.js"></script>
