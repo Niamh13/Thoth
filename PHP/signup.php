@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // database connect
     $host = "sql109.infinityfree.com";
     $dbusername = "if0_35864125";
-    $dbpassword = "superThoth"; //depends on password
+    $dbpassword = "superThoth";
     $dbname = "if0_35864125_auth";
 
     $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
