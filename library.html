@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/Beta2/CSS/styles.css"/>
+    <title>Document</title>
+</head>
+<body onload="loadLibrary()">
+<!-- Navigation bar section -->
+<div class="TopNav">
+    <!-- Navigation links -->
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
+
+    <!-- Dropdown menu for user profile and settings -->
+    <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">
+            <!-- User icon in the dropdown button -->
+            <img
+                    src="/Beta2/Images/user.png"
+                    alt="User"
+                    style="vertical-align: middle"
+            />
+        </button>
+
+        <!-- Dropdown content hidden by default shown on click -->
+        <div class="DropdownContent" id="DropdownContent">
+            <a href="profile.html">My Profile</a>
+            <a href="library.html">My Library</a>
+            <a href="contact.html">Customer Service</a>
+            <!-- Logout link with inline onclick event to call logout function -->
+            <a>
+                <form method="post" action="Beta2/PHP/logout.php">
+                    <button name="logoutButton" class="logoutButton">Logout</button>
+                </form>
+            </a>
+        </div>
+    </div>
+
+    <!-- Hamburger icon for mobile navigation menu -->
+    <a href="javascript:void(0);" class="icon" onclick="openSideNav()"
+    >&#9776;</a
+    >
+</div>
+
+<!-- Side navigation menu hidden by default -->
+<div id="SideNav" class="SideNav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()"
+    >&times;</a
+    >
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
+</div>
+
+<h1 class="heading">My Library</h1>
+
+<div id="libraryBooks" class="grid-item"></div>
+
+<!--php connection-->
+<?php
+include('Beta2/PHP/display.php');
+include('Beta2/PHP/login.php');
+include('Beta2/PHP/logout.php');
+?>
+<script type="text/javascript" src="/Beta2/JavaScript/script.js"></script>
+</body>
+</html>

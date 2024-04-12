@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Thoth</title>
+    <!-- Link to the external CSS file -->
+    <link href="CSS/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<!-- Navigation bar section -->
+<div class="TopNav">
+    <!-- Navigation links -->
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
+
+    <!-- Dropdown menu for user profile and settings -->
+    <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">
+            <!-- User icon in the dropdown button -->
+            <img src="Images/user.png" alt="User" style="vertical-align: middle;">
+        </button>
+
+        <!-- Dropdown content hidden by default shown on click -->
+        <div class="DropdownContent" id="DropdownContent">
+            <a onclick="profile()" href="#">My Profile</a>
+            <a href="/Beta2/library.html">My Library</a>
+            <a href="#">Customer Service</a>
+            <a href="#">Settings</a>
+            <!-- Logout link with inline onclick event to call logout function -->
+            <a onclick="logout()" href="Beta2/index.html">Logout</a>
+        </div>
+    </div>
+
+    <!-- Hamburger icon for mobile navigation menu -->
+    <a href="javascript:void(0);" class="icon" onclick="openSideNav()">&#9776;</a>
+</div>
+
+<!-- Side navigation menu hidden by default -->
+<div id="SideNav" class="SideNav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
+</div>
+
+<!-- Account login container -->
+<div class="AccContainer">
+    <h2>LOGIN</h2>
+    <!-- Login form -->
+    <form class="AccForm" id="AccForm" action="PHP/login.php" method="post">
+        <!-- Input group for username and password -->
+        <div class="InputGroup">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" minlength="4" required>
+        </div>
+
+        <!-- Links for forgotten password and the submit button for login -->
+        <div class="links">
+            <a href="#">Forget password?</a>
+            <button type="submit" class="AccButton">Login</button>
+        </div>
+    </form>
+
+    <!-- Link to the signup page-->
+    <div class="AccLink">
+        <span class="SignupText">Don't have an account?</span> <a href="/Beta2/signup.html">Sign Up Here</a>
+    </div>
+</div>
+
+<!-- External JavaScript file-->
+<script src="/Beta2/JavaScript/script.js"></script>
+<?php
+include login.php;
+?>
+</body>
+
+</html>
