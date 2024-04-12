@@ -3,56 +3,66 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="CSS/styles.css"/>
-    <title>Library Page</title>
+    <link rel="stylesheet" href="/Beta2/CSS/styles.css"/>
+    <title>Document</title>
 </head>
 <body onload="loadLibrary()">
 <!-- Navigation bar section -->
 <div class="TopNav">
     <!-- Navigation links -->
-    <a class="link" href="index.html">Home</a>
-    <a class="link" href="search.html">Search</a>
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
 
     <!-- Dropdown menu for user profile and settings -->
     <div class="dropdown">
         <button class="dropbtn" onclick="toggleDropdown()">
             <!-- User icon in the dropdown button -->
-            <img src="Images/user.png" alt="User" style="vertical-align: middle;">
+            <img
+                    src="/Beta2/Images/user.png"
+                    alt="User"
+                    style="vertical-align: middle"
+            />
         </button>
 
         <!-- Dropdown content hidden by default shown on click -->
         <div class="DropdownContent" id="DropdownContent">
-            <a href="#">My Profile</a>
+            <a href="profile.html">My Profile</a>
             <a href="library.html">My Library</a>
-            <a href="#">Customer Service</a>
-            <a href="#">Settings</a>
+            <a href="contact.html">Customer Service</a>
             <!-- Logout link with inline onclick event to call logout function -->
-            <a name="logoutButton" method="delete" href="index.html">Logout</a>
+            <a>
+                <form method="post" action="Beta2/PHP/logout.php">
+                    <button name="logoutButton" class="logoutButton">Logout</button>
+                </form>
+            </a>
         </div>
     </div>
 
     <!-- Hamburger icon for mobile navigation menu -->
-    <a href="javascript:void(0);" class="icon" onclick="openSideNav()">&#9776;</a>
+    <a href="javascript:void(0);" class="icon" onclick="openSideNav()"
+    >&#9776;</a
+    >
 </div>
 
 <!-- Side navigation menu hidden by default -->
 <div id="SideNav" class="SideNav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
-    <a class="link" href="index.html">Home</a>
-    <a class="link" href="search.html">Search</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()"
+    >&times;</a
+    >
+    <a class="link" href="/Beta2/index.html">Home</a>
+    <a class="link" href="/Beta2/search.html">Search</a>
 </div>
 
 <h1 class="heading">My Library</h1>
 
 <div id="libraryBooks" class="grid-item"></div>
 
-<script src="JavaScript/script.js"></script>
 <!--php connection-->
 <?php
-include('display.php');
-include('login.php');
+include('Beta2/PHP/display.php');
+include('Beta2/PHP/login.php');
+include('Beta2/PHP/logout.php');
 ?>
-<script>$(window).load(function(){$('#libraryBooks').load('/php/display.php');})</script>
-
+<script type="text/javascript" src="/Beta2/JavaScript/script.js"></script>
 </body>
 </html>
