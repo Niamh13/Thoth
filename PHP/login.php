@@ -1,53 +1,54 @@
 <?php
 session_start();
 
-include("connection.php");
-
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // retrieve data
-    $name = $_POST['fullName'];
     $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['confirmPassword'];
+    $password = $_POST['password'];
 
-    //starting session + variables
+    // set loggIn
+    $_SESSION["loggIn"] = false;
+
+    // starting session + variables
     $_SESSION["username"] = $username;
 
-   
+    // database connect
+    $host = "localhost";
+    $dbusername = "root";
+    $dbpassword = "Timmy2013";
+    $dbname = "auth";
 
-    $query = "SELECT * FROM login WHERE username = '$username';";
+    $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
 
-    $result = $conn->query($query);
-
-    if($result->num_rows == 0){
-        echo'<script type="text/javascript">alert("Username not found");</script>';
-        $conn->close();
-        die;
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
-    else{
-        $query1 = "INSERT INTO login VALUE('$username', '$password', '$name', '$email');";
-        $query1 = "CREATE TABLE '$username'(bookId VARCHAR (255), PRIMARY KEY (bookId));";
-        if($conn->query($query1)===TRUE){
-            echo'<script type="text/javascript">alert("Success");</script>';
-            header('Location: login.html');
-            $conn->close();
-            die;
+
+    // Check if the table exists
+    $checkTableQuery = "SHOW TABLES LIKE '$username'";
+    $checkTableResult = $conn->query($checkTableQuery);
+
+    if ($checkTableResult->num_rows > 0) {
+        // Table exists, check credentials
+        $query = "SELECT * FROM login WHERE username = '$username' AND password = '$password'";
+        $result = $conn->query($query);
+
+        if ($result->num_rows > 0) {
+            // Credentials match, log in
+            $_SESSION["loggIn"] = true;
+            header('Location: /library.html');
+            exit();
+            // Perform additional actions for successful login
+        } else {
+            // Credentials don't match
+            echo '<script type="text/javascript">alert("Incorrect username or password"); window.location.href = "/Beta2/login.html"</script>';
+
         }
-        else{
-            echo'<script type="text/javascript">alert("Fail");</script>';
-            $conn->close();
-            die;
-        }
-        
+    } else {
+        // Table doesn't exist
+        echo '<script type="text/javascript">alert("Username not found");</script>';
     }
+
+    $conn->close();
 }
 
-if(isset($_POST['logoutButton'])){
-    logOut();
-}
-
-function logOut(){
-    unset($_SESSION['username']);
-    header("Location: login.html");
-    die;
-}
