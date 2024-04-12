@@ -2,82 +2,40 @@
 
 session_start();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['username'])) {
+    $bookId = $_GET['id'];
+    $username = $_SESSION['username'];
 
-if (isset($_POST['savebutton'])) {
-    saveBook();
-}
-
-function saveBook()
-{
-    //database connect
-    $host = "localhost";
-    $dbusername = "root";
-    $dbpassword = ""; //depends on password
-    $dbname = "auth";
+    // Database connection
+    $host = "sql109.infinityfree.com";
+    $dbusername = "if0_35864125";
+    $dbpassword = "superThoth";
+    $dbname = "if0_35864125_auth";
 
     $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    // echo variable username
-    include "login.php";
-    echo $_SESSION["username"];
-    $username = $_SESSION["username"];
 
-    header('Content-Type: application/json');
+    // Check if the book ID already exists in the user's table
+    $checkQuery = "SELECT * FROM $username WHERE bookId = '$bookId'";
+    $checkResult = $conn->query($checkQuery);
 
-    $method = $_SERVER['REQUEST_METHOD'];
-    switch ($method) {
-        case 'POST':
-            $bookId = $_GET["id"];
-            $url = $_COOKIE['url'];
-            $data = json_decode(file_get_contents($url), true);
-            $title = $data['volumeInfo.title'];
-            $thumbnail = $data['volumeInfo.imageLinks.thumbnail'];
-            $author = $data['volumeInfo.author'];
-            $publisher = $data['volumeInfo.publisher'];
-            $publishDate = $data['volumeInfo.publishedDate'];
-            $pageCount = $data['volumeInfo.pageCount'];
-            $category = $data['volumeInfo.categories'];
-            $rating = $data['volumeInfo.categories'];
-
-            $query1 = "INSERT INTO '$username' (bookId) VALUES ('$bookId')       ";
-            $query = $conn->prepare('INSERT INTO books (bookId, title, image, author, publisher, publishDate, pageCount, category, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $result = $conn->query("SELECT * FROM '$username' WHERE bookId = '$bookId';");
-            if ($result->num_rows > 0) {
-                echo json_encode(['message' => 'Book already added']);
-            } else {
-                $query->execute([$title, $thumbnail, $author, $publisher, $publishDate, $pageCount, $category, $rating]);
-            }
-
-            echo json_encode(['message' => 'Book added successfully']);
-            if (mysqli_query($conn, $query1)) {
-                echo "new record created successfful";
-            } else {
-                echo "Error: " . mysqli_error($conn);
-            }
-            break;
-
-        case 'DELETE':
-            $bookId = $_GET["id"];
-            $query = $conn->prepare('DELETE FROM books WHERE id=?');
-            $query->execute([$bookId]);
-
-            echo json_encode(['message' => 'Book deleted']);
-            break;
-
+    if ($checkResult->num_rows > 0) {
+        echo "Book already exists in the library.";
+    } else {
+        // Insert the book ID into the user's table
+        $insertQuery = "INSERT INTO $username (bookId) VALUES ('$bookId')";
+        if ($conn->query($insertQuery) === TRUE) {
+            echo "Book saved successfully.";
+        } else {
+            echo "Error: " . $insertQuery . "<br>" . $conn->error;
+        }
     }
 
-
+    $conn->close();
+} else {
+    echo "Unauthorized access.";
 }
-
-
-/*
-------------------------------
-----------REFERENCES----------
-------------------------------
-
-[1]: I learned how to save and delete books for the api to the database, as well as echoing variables. URL: https://medium.com/@miladev95/how-to-make-crud-rest-api-in-php-with-mysql-5063ae4cc89
-
-*/
+?>
