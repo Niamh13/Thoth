@@ -1,11 +1,16 @@
 <?php
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // retrieve data
-    $name = $_POST['fullName'];
     $username = $_POST['username'];
-    $email = $_POST['email'];
     $password = $_POST['password'];
-    $passwordC = $_POST['confirmPassword'];
+
+    // set loggIn
+    $_SESSION["loggIn"] = false;
+
+    // starting session + variables
+    $_SESSION["username"] = $username;
 
     // database connect
     $host = "sql109.infinityfree.com";
@@ -19,30 +24,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    if ($passwordC == $password) {
-        $query = "SELECT * FROM login WHERE username = '$username'";
+    // Check if the table exists
+    $checkTableQuery = "SHOW TABLES LIKE '$username'";
+    $checkTableResult = $conn->query($checkTableQuery);
+
+    if ($checkTableResult->num_rows > 0) {
+        // Table exists, check credentials
+        $query = "SELECT * FROM login WHERE username = '$username' AND password = '$password'";
         $result = $conn->query($query);
 
         if ($result->num_rows > 0) {
-            echo '<script type="text/javascript">alert("Username is already in use"); window.location.href = "/signup.html";</script>';
+            // Credentials match, log in
+            $_SESSION["loggIn"] = true;
+            header('Location: /library.html');
+            exit();
+            // Perform additional actions for successful login
         } else {
-            $query1 = "INSERT INTO login VALUES ('$username', '$password', '$name', '$email')";
-            if ($conn->query($query1) === TRUE) {
-                $createTableQuery = "CREATE TABLE `$username` (bookId VARCHAR(255))";
-                if ($conn->query($createTableQuery) === TRUE) {
-                    //echo '<script type="text/javascript">alert("Success");</script>';
-                    header('Location: /login.html');
-                    exit();
-                } else {
-                    echo '<script type="text/javascript">alert("Fail to create user table");</script>';
-                    header('Location: /signup.html');
-                }
-            } else {
-                echo '<script type="text/javascript">alert("Fail to insert user data");</script>';
-            }
+            // Credentials don't match
+            echo '<script type="text/javascript">alert("Incorrect username or password"); window.location.href = "/login.html"</script>';
+
         }
     } else {
-        echo '<script type="text/javascript">alert("Passwords entered are not the same");</script>';
+        // Table doesn't exist
+        echo '<script type="text/javascript">alert("Username not found");</script>';
     }
+
     $conn->close();
+}
+
+if (isset($_POST['logoutButton'])) {
+    logOut();
+}
+
+function logOut()
+{
+    unset($_SESSION['username']);
+    header("Location: login.html");
+    echo '<script>console.log("Logged out Successfully");</script>';
+    die;
 }
