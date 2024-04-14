@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             // Credentials match, log in
-            $_SESSION["loggIn"] = true;
+            $_SESSION["loggIn"] = true;  
             header('Location: /library.html');
             exit();
             // Perform additional actions for successful login
