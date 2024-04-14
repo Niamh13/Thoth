@@ -34,15 +34,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header('Location: /login.html');
                     exit();
                 } else {
+                    //if theres a problem with the user table creation//
                     echo '<script type="text/javascript">alert("Fail to create user table"); window.location.href = "/signup.html";</script>';
                     header('Location: /signup.html');
                 }
             } else {
+                //if theres a problem  with saving the user's data//
                 echo '<script type="text/javascript">alert("Fail to insert user data"); window.location.href = "/signup.html";</script>';
             }
         }
     } else {
+        //if theres a problem with the entered data//
         echo '<script type="text/javascript">alert("Passwords entered are not the same"); window.location.href = "/signup.html";</script>';
     }
+    //diconnect from database//
     $conn->close();
 }
