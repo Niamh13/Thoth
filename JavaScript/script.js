@@ -349,7 +349,7 @@ window.onclick = function (event) {
 function contactForm() {
 
     alert("Your message has been sent successfully!");
-    return false;
+    location.reload();
 
 }
 
