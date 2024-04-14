@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // retrieve data
@@ -13,10 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION["username"] = $username;
 
     // database connect
-    $host = "localhost";
-    $dbusername = "root";
-    $dbpassword = "Timmy2013";
-    $dbname = "auth";
+    $host = "sql109.infinityfree.com";
+    $dbusername = "if0_35864125";
+    $dbpassword = "superThoth";
+    $dbname = "if0_35864125_auth";
 
     $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
 
@@ -41,12 +43,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Perform additional actions for successful login
         } else {
             // Credentials don't match
-            echo '<script type="text/javascript">alert("Incorrect username or password"); window.location.href = "/Beta2/login.html"</script>';
+            echo '<script type="text/javascript">alert("Incorrect username or password"); window.location.href = "/login.html"</script>';
 
         }
     } else {
         // Table doesn't exist
-        echo '<script type="text/javascript">alert("Username not found");</script>';
+        echo '<script type="text/javascript">alert("Username not found"); window.location.href = "/login.html";</script>';
     }
 
     $conn->close();
