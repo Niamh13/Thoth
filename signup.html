@@ -1,40 +1,53 @@
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Thoth</title>
     <link href="CSS/styles.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
 <!-- Navigation bar section -->
 <div class="TopNav">
-    <a class="link" href="/Beta2/index.html">Home</a>
-    <a class="link" href="/Beta2/search.html">Search</a>
+    <!-- Navigation links -->
+    <a class="link" href="index.html">Home</a>
+    <a class="link" href="search.html">Search</a>
 
-    <div class="dropdown">
-        <button class="dropbtn" onclick="toggleDropdown()">
-            <img src="/Beta2/Images/user.png" alt="User" style="vertical-align: middle;">
-        </button>
-
-        <div class="DropdownContent" id="DropdownContent">
-            <a onclick="profile()" href="#">My Profile</a>
-            <a href="/Beta2/library.html">My Library</a>
-            <a href="#">Customer Service</a>
-            <a href="#">Settings</a>
-            <a onclick="logout()" href="Beta2/index.html">Logout</a>
-        </div>
-
+    <div class="nav-center">
+      <span class="nav-text">Thoth</span>
+      <img src="Images/thoth.png" alt="Thoth" class="nav-logo">
     </div>
 
+    <!-- Hamburger icon for mobile navigation menu -->
     <a href="javascript:void(0);" class="icon" onclick="openSideNav()">&#9776;</a>
-</div>
+
+    <!-- Dropdown menu for user profile and settings -->
+
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">
+        <!-- User icon in the dropdown button -->
+        <img src="Images/user.png" alt="User" style="vertical-align: middle;">
+      </button>
+
+      <!-- Dropdown content hidden by default shown on click -->
+      <div class="DropdownContent" id="DropdownContent">
+        <a href="library.html">My Library</a>
+        <a href="contact.html">Customer Service</a>
+        <!-- Logout link with inline onclick event to call logout function -->
+        <form method="post" action="PHP/logout.php">
+          <button name="logoutButton" class="logoutButton">Logout</button>
+        </form>
+                
+      </div>
+    </div>
+  </div>
 
 <div id="SideNav" class="SideNav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
-    <a class="link" href="/Beta2/index.html">Home</a>
-    <a class="link" href="/Beta2/search.html">Search</a>
+    <a class="link" href="index.html">Home</a>
+    <a class="link" href="search.html">Search</a>
 </div>
 
 <!-- Signup container -->
@@ -52,8 +65,7 @@
 
             <input type="password" id="password" name="password" placeholder="Password" minlength="4" required>
 
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
-                   minlength="4" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" minlength="4" required>
         </div>
 
         <!-- Submit button for Signup -->
@@ -64,7 +76,7 @@
     </form>
     <!-- Link to the Login page-->
     <div class="AccLink">
-        <span class="SignupText">Already have an account? </span><a href="/Beta2/login.html">Login</a>
+        <span class="SignupText">Already have an account? </span><a href="login.html">Login</a>
 
     </div>
 
