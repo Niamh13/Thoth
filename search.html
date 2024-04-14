@@ -1,13 +1,11 @@
 <html>
-
 <head>
+    <title>Thoth</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Thoth</title>
     <link href="CSS/styles.css" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
 <!-- Navigation bar section -->
 <div class="TopNav">
@@ -33,7 +31,6 @@
 
       <!-- Dropdown content hidden by default shown on click -->
       <div class="DropdownContent" id="DropdownContent">
-        <a href="profile.html">My Profile</a>
         <a href="library.html">My Library</a>
         <a href="contact.html">Customer Service</a>
         <!-- Logout link with inline onclick event to call logout function -->
@@ -45,46 +42,29 @@
     </div>
   </div>
 
+<!-- Side navigation menu hidden by default -->
 <div id="SideNav" class="SideNav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideNav()">&times;</a>
     <a class="link" href="index.html">Home</a>
     <a class="link" href="search.html">Search</a>
 </div>
+<h1 class="heading">Search</h1>
 
-<!-- Signup container -->
-<div class="AccContainer">
-    <h2>SIGN UP</h2>
-    <!-- Signup form -->
-    <form class="AccForm" action="PHP/signup.php" method="post">
-
-        <div class="InputGroup">
-            <input type="text" id="fullName" name="fullName" placeholder="Full Name" minlength="4" required>
-
-            <input type="text" id="username" name="username" placeholder="Username" minlength="4" required>
-
-            <input type="email" id="email" name="email" placeholder="Email" required>
-
-            <input type="password" id="password" name="password" placeholder="Password" minlength="4" required>
-
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" minlength="4" required>
-        </div>
-
-        <!-- Submit button for Signup -->
-        <div class="links">
-            <button type="submit" class="AccButton">Sign up</button>
-        </div>
-
-    </form>
-    <!-- Link to the Login page-->
-    <div class="AccLink">
-        <span class="SignupText">Already have an account? </span><a href="login.html">Login</a>
-
-    </div>
-
+<div id="searchDiv">
+    <input type="text" id="search"/>
+    <button id="searchButton" class="button" onclick="search()">
+        Search
+    </button>
 </div>
 
-<!-- External JavaScript file-->
-<script src="JavaScript/script.js"></script>
-</body>
+<div id="searchResults" class="grid-item"></div>
 
+
+
+<script src="JavaScript/script.js"></script>
+<!--php connection-->
+<?php
+include('/Thoth-beta-404/PHP/bookSave.php');
+?>
+</body>
 </html>
