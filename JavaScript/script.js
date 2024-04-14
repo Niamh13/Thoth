@@ -1,4 +1,34 @@
-var isLoggedIn = false;
+/*
+=======================
+=====LOG IN STATUS=====
+=======================
+*/
+let isLoggedIn = false;
+
+function checkLoginStatus() {
+    console.log("Checking login status...");
+    fetch("/PHP/checkLogin.php")
+        .then(response => response.json())
+        .then(data => {
+            console.log("Received login status data:", data);
+            if (data.loggedIn) {
+                // User is logged in, load their library
+                console.log("User is logged in");
+                isLoggedIn = true;
+                loadLibrary();
+            } else {
+                // User is not logged in, redirect them to login page
+                console.log("User is not logged in");
+                isLoggedIn = false;
+                alert("Please log in");
+                window.location.href = "login.html";
+            }
+        })
+        .catch(error => {
+            console.error("Error checking login status:", error);
+        });
+}
+
 
 /*
 =======================
@@ -56,35 +86,18 @@ function viewBook(bookId) {
 ===DISPLAY BOOK PAGE===
 =======================
 */
-function getBook() {
+async function getBook() {
     const urlParams = new URLSearchParams(window.location.search);
     const bookId = urlParams.get("id");
 
-    const urlPromise = fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            displayBookDetails(data);
-            console.log(data);
-        })
-        .catch(function (error) {
-            console.error("Error fetching book details:", error);
-        });
-
-    document.cookie = "url";
-
-    fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            displayBookDetails(data);
-            console.log(data);
-        })
-        .catch(function (error) {
-            console.error("Error fetching book details:", error);
-        });
+    try {
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`);
+        const book = await response.json();
+        displayBookDetails(book);
+        console.log(book);
+    } catch (error) {
+        console.error("Error fetching book details:", error);
+    }
 
 
     function displayBookDetails(book) {
@@ -154,6 +167,8 @@ function saveToLibrary(bookId) {
             if (response.ok) {
                 console.log('Book saved to library');
                 alert("Book saved!");
+                // Update the library after saving the book
+                loadLibrary();
             } else {
                 console.error('Error saving book to library');
                 alert("Error saving book!");
@@ -165,19 +180,49 @@ function saveToLibrary(bookId) {
         });
 }
 
-
+/*
+=======================
+====DISPLAY LIBRARY====
+=======================
+*/
 function loadLibrary() {
-    fetch("Beta2/PHP/display.php")
-        .then(response => response.text())
+    fetch("/PHP/display.php")
+        .then(response => response.json())
         .then(data => {
-            console.log("Book IDs:", data);
-            document.getElementById("libraryBooks").insertAdjacentHTML('beforeend', data);
+            if (isLoggedIn === true) {
+                // Check if the response contains the expected data structure
+                if (Array.isArray(data)) {
+                    console.log("Book IDs:", data);
+                    // Loop through each book ID and fetch its details
+                    data.forEach((bookId) => {
+                        fetchBookDetails(bookId)
+                            .then((book) => {
+                                displayBook(book);
+                            })
+                            .catch((error) => {
+                                console.error("Error fetching book details:", error);
+                            });
+                    });
+                } else {
+                    console.error("Error:", data);
+                }
+            }
         })
         .catch(error => {
             console.error("Error fetching book IDs:", error);
         });
 }
 
+function fetchBookDetails(bookId) {
+    // Fetch book details using the book ID
+    return fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
+        .then(response => response.json())
+        .then(data => data)
+        .catch(error => {
+            console.error("Error fetching book details:", error);
+            throw error;
+        });
+}
 
 function displayBook(book) {
     const libraryBooks = document.getElementById("libraryBooks");
@@ -194,6 +239,8 @@ function displayBook(book) {
     `;
     libraryBooks.innerHTML += bookInfo;
 }
+
+
 
 /*
 ------------------------------
@@ -232,6 +279,18 @@ window.onclick = function (event) {
 function logout() {
     alert("You have been logged out.");
     window.location.href = 'index.html';
+}
+
+/*
+------------------------------
+----------contact---------------
+------------------------------
+*/
+function contactForm() {
+
+    alert("Your message has been sent successfully!");
+    return false;
+    
 }
 
 /*
