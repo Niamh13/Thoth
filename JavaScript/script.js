@@ -10,10 +10,10 @@ let isLoggedIn = false;
 function checkLoginStatus() {
     // reference 4 and 5
     fetch("/PHP/checkLogin.php")
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             console.log("Received login status data:", data);
             if (data.loggedIn) {
                 // User is logged in, load their library
@@ -28,11 +28,10 @@ function checkLoginStatus() {
                 window.location.href = "login.html";
             }
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error("Error checking login status:", error);
         });
 }
-
 
 
 /*
@@ -40,6 +39,7 @@ function checkLoginStatus() {
 ====SEARCH FUNCTION====
 =======================
 */
+
 // Function to search the Google Books API
 function search() {
     // Retrieves the value of the search box
@@ -66,6 +66,7 @@ function search() {
 ====DISPLAY RESULTS====
 =======================
 */
+
 // Function to display the search results
 function displayResults(books) {
     const searchResults = document.getElementById("searchResults");
@@ -99,6 +100,7 @@ function viewBook(bookId) {
 ===DISPLAY BOOK PAGE===
 =======================
 */
+
 // Function to extract the bookID from the url bar and perform a search for that specific book on its own page
 async function getBook() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -172,13 +174,14 @@ async function getBook() {
 =======SAVE BOOK=======
 =======================
 */
+
 // Function to save the books to the library
 function saveToLibrary(bookId) {
     // Send a POST request to PHP with the book ID
     fetch('/PHP/bookSave.php?id=' + bookId, {
         method: 'POST'
     })
-        .then(function(response) {
+        .then(function (response) {
             if (response.ok) {
                 // Update the library after saving the book
                 console.log('Book saved to library');
@@ -189,7 +192,7 @@ function saveToLibrary(bookId) {
                 alert("Error saving book!");
             }
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error('Error saving book to library:', error);
             alert("Error saving book!");
         });
@@ -201,13 +204,14 @@ function saveToLibrary(bookId) {
 ====DISPLAY LIBRARY====
 =======================
 */
+
 // Function to load and display the books in the users library
 function loadLibrary() {
     fetch("/PHP/display.php")
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             // Make sure user is logged in
             if (isLoggedIn === true) {
                 // Make sure the response is in the expected structure
@@ -216,14 +220,14 @@ function loadLibrary() {
                     // For testing
                     console.log("Book IDs:", data);
                     // Loops through the returned books
-                    data.forEach(function(bookId) {
+                    data.forEach(function (bookId) {
                         // Calls the fetchBookDetails function to retrieve the details
                         fetchBookDetails(bookId)
-                            .then(function(book) {
+                            .then(function (book) {
                                 // Calls the displayBooks function to display the book and its information
                                 displayBook(book);
                             })
-                            .catch(function(error) {
+                            .catch(function (error) {
                                 console.error("Error fetching book details:", error);
                             });
                     });
@@ -232,7 +236,7 @@ function loadLibrary() {
                 }
             }
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error("Error fetching book IDs:", error);
         });
 }
@@ -241,13 +245,13 @@ function loadLibrary() {
 function fetchBookDetails(bookId) {
     // Fetch book details using the book ID
     return fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             return data;
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error("Error fetching book details:", error);
             throw error;
         });
@@ -258,7 +262,7 @@ function displayBook(book) {
     const libraryBooks = document.getElementById("libraryBooks");
     const bookInfo = `
       <div class="searchResultDiv">
-        <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover">
+        <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover" alt="book cover">
         <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
         <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
         <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
@@ -279,6 +283,7 @@ function displayBook(book) {
 // Function to delete the books
 function deleteBook(bookId) {
     // Define the request options
+    // Reference 6
     const options = {
         method: 'POST',
         headers: {
@@ -289,7 +294,7 @@ function deleteBook(bookId) {
 
     // Send the fetch request
     fetch('/PHP/deleteBook.php', options)
-        .then(function(response) {
+        .then(function (response) {
             // Check the response status
             if (response.ok) {
                 console.log('Book deleted successfully');
@@ -297,7 +302,7 @@ function deleteBook(bookId) {
                 console.error('Error:', response.status, response.statusText);
             }
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error('Error:', error);
         });
 }
@@ -362,5 +367,7 @@ function contactForm() {
 [4]: I learned about and how to use JavaScript promises from these two resources: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise, and https://www.w3schools.com/js/js_promise.asp
 
 [5]: I learned about fetch API: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch and https://www.w3schools.com/jsref/api_fetch.asp
+
+[6]: Code was modified and adapted from a post here: https://stackoverflow.com/questions/29775797/fetch-post-json-data
 
 */
