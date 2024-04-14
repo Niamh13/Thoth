@@ -3,14 +3,17 @@
 =====LOG IN STATUS=====
 =======================
 */
+// Creates a variable to track login status
 let isLoggedIn = false;
 
+// Function to check login status
 function checkLoginStatus() {
     // reference 4 and 5
-    console.log("Checking login status...");
     fetch("/PHP/checkLogin.php")
-        .then(response => response.json())
-        .then(data => {
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
             console.log("Received login status data:", data);
             if (data.loggedIn) {
                 // User is logged in, load their library
@@ -25,10 +28,11 @@ function checkLoginStatus() {
                 window.location.href = "login.html";
             }
         })
-        .catch(error => {
+        .catch(function(error) {
             console.error("Error checking login status:", error);
         });
 }
+
 
 
 /*
@@ -36,12 +40,17 @@ function checkLoginStatus() {
 ====SEARCH FUNCTION====
 =======================
 */
+// Function to search the Google Books API
 function search() {
+    // Retrieves the value of the search box
     const searchInput = document.getElementById("search").value;
+
+    // Checks if the search input is empty before submitting it to the API
     if (searchInput === "") {
         alert("Please enter a search");
     } else {
         // Reference 1
+        // Performs a search using the Google Books API
         fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchInput}`)
             .then((response) => response.json())
             .then((data) => {
@@ -57,10 +66,12 @@ function search() {
 ====DISPLAY RESULTS====
 =======================
 */
+// Function to display the search results
 function displayResults(books) {
     const searchResults = document.getElementById("searchResults");
     searchResults.innerHTML = "";
 
+    // Loops through the results and displays the information using template literals
     books.forEach((book) => {
         const bookInfo = `
         <div class="searchResultDiv">
@@ -78,6 +89,7 @@ function displayResults(books) {
 }
 
 // Reference 2
+// Function to put the bookID into the url bar
 function viewBook(bookId) {
     window.location.href = `book.html?id=${bookId}`;
 }
@@ -87,6 +99,7 @@ function viewBook(bookId) {
 ===DISPLAY BOOK PAGE===
 =======================
 */
+// Function to extract the bookID from the url bar and perform a search for that specific book on its own page
 async function getBook() {
     const urlParams = new URLSearchParams(window.location.search);
     const bookId = urlParams.get("id");
@@ -100,7 +113,7 @@ async function getBook() {
         console.error("Error fetching book details:", error);
     }
 
-
+    // Displays the book information
     function displayBookDetails(book) {
         const bookDetails = document.getElementById("bookDetails");
         bookDetails.innerHTML = `
@@ -159,48 +172,58 @@ async function getBook() {
 =======SAVE BOOK=======
 =======================
 */
+// Function to save the books to the library
 function saveToLibrary(bookId) {
-    // Send a POST request to your PHP backend with the book ID
+    // Send a POST request to PHP with the book ID
     fetch('/PHP/bookSave.php?id=' + bookId, {
         method: 'POST'
     })
-        .then(response => {
+        .then(function(response) {
             if (response.ok) {
+                // Update the library after saving the book
                 console.log('Book saved to library');
                 alert("Book saved!");
-                // Update the library after saving the book
                 loadLibrary();
             } else {
                 console.error('Error saving book to library');
                 alert("Error saving book!");
             }
         })
-        .catch(error => {
+        .catch(function(error) {
             console.error('Error saving book to library:', error);
             alert("Error saving book!");
         });
 }
+
 
 /*
 =======================
 ====DISPLAY LIBRARY====
 =======================
 */
+// Function to load and display the books in the users library
 function loadLibrary() {
     fetch("/PHP/display.php")
-        .then(response => response.json())
-        .then(data => {
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            // Make sure user is logged in
             if (isLoggedIn === true) {
-                // Check if the response contains the expected data structure
+                // Make sure the response is in the expected structure
                 if (Array.isArray(data)) {
+                    // Displays the bookIDs in console
+                    // For testing
                     console.log("Book IDs:", data);
-                    // Loop through each book ID and fetch its details
-                    data.forEach((bookId) => {
+                    // Loops through the returned books
+                    data.forEach(function(bookId) {
+                        // Calls the fetchBookDetails function to retrieve the details
                         fetchBookDetails(bookId)
-                            .then((book) => {
+                            .then(function(book) {
+                                // Calls the displayBooks function to display the book and its information
                                 displayBook(book);
                             })
-                            .catch((error) => {
+                            .catch(function(error) {
                                 console.error("Error fetching book details:", error);
                             });
                     });
@@ -209,22 +232,28 @@ function loadLibrary() {
                 }
             }
         })
-        .catch(error => {
+        .catch(function(error) {
             console.error("Error fetching book IDs:", error);
         });
 }
 
+// Function to fetch book details from the Google Books API
 function fetchBookDetails(bookId) {
     // Fetch book details using the book ID
     return fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-        .then(response => response.json())
-        .then(data => data)
-        .catch(error => {
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            return data;
+        })
+        .catch(function(error) {
             console.error("Error fetching book details:", error);
             throw error;
         });
 }
 
+// Function to function to display the books
 function displayBook(book) {
     const libraryBooks = document.getElementById("libraryBooks");
     const bookInfo = `
@@ -241,30 +270,42 @@ function displayBook(book) {
     libraryBooks.innerHTML += bookInfo;
 }
 
+/*
+=======================
+======DELETE BOOKS=====
+=======================
+*/
+
+// Function to delete the books
 function deleteBook(bookId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/PHP/deleteBook.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                console.log(xhr.responseText);
-            } else {
-                console.error('Error:', xhr.status, xhr.statusText);
-            }
-        }
+    // Define the request options
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/x-www-form-urlencoded'
+        },
+        body: 'bookId=' + encodeURIComponent(bookId)
     };
-    xhr.send('bookId=' + encodeURIComponent(bookId));
+
+    // Send the fetch request
+    fetch('/PHP/deleteBook.php', options)
+        .then(function(response) {
+            // Check the response status
+            if (response.ok) {
+                console.log('Book deleted successfully');
+            } else {
+                console.error('Error:', response.status, response.statusText);
+            }
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+        });
 }
 
-
-
-
-
 /*
-------------------------------
-----------Navigation----------
-------------------------------
+=======================
+====NAVIGATION BAR=====
+=======================
 */
 function toggleDropdown() {
     document.getElementById("DropdownContent").classList.toggle("show");
@@ -295,15 +336,10 @@ window.onclick = function (event) {
     }
 }
 
-function logout() {
-    alert("You have been logged out.");
-    window.location.href = 'index.html';
-}
-
 /*
-------------------------------
-----------contact---------------
-------------------------------
+=======================
+========CONTACT========
+=======================
 */
 function contactForm() {
 
