@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['username'])) {
 
     $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
 
+    //check database connection//
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
