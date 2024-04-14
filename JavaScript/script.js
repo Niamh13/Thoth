@@ -6,6 +6,7 @@
 let isLoggedIn = false;
 
 function checkLoginStatus() {
+    // reference 4 and 5
     console.log("Checking login status...");
     fetch("/PHP/checkLogin.php")
         .then(response => response.json())
@@ -232,13 +233,31 @@ function displayBook(book) {
         <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
         <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
         <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
-        <form method="DELETE">
-        <button class="saveButton" name="saveButton">Delete from Library</button>
+            <form method="post">
+        <button class="saveButton" name="saveButton" onclick="deleteBook('${book.id}')">Delete from Library</button>
         </form>
       </div>
     `;
     libraryBooks.innerHTML += bookInfo;
 }
+
+function deleteBook(bookId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/PHP/deleteBook.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            } else {
+                console.error('Error:', xhr.status, xhr.statusText);
+            }
+        }
+    };
+    xhr.send('bookId=' + encodeURIComponent(bookId));
+}
+
+
 
 
 
@@ -290,7 +309,7 @@ function contactForm() {
 
     alert("Your message has been sent successfully!");
     return false;
-    
+
 }
 
 /*
@@ -303,5 +322,9 @@ function contactForm() {
 [2]: I learned how to get the window URL from this page: https://stackoverflow.com/questions/1034621/get-the-current-url-with-javascript
 
 [3]: I learned how access and save to local storage: https://stackoverflow.com/questions/34493531/how-to-store-and-retrieve-json-data-into-local-storage, https://www.w3schools.com/jsref/tryit.asp?filename=tryjson_store
+
+[4]: I learned about and how to use JavaScript promises from these two resources: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise, and https://www.w3schools.com/js/js_promise.asp
+
+[5]: I learned about fetch API: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch and https://www.w3schools.com/jsref/api_fetch.asp
 
 */
