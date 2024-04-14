@@ -1,7 +1,20 @@
+/*
+------------------
+BODY
+------------------
+*/
+
 body {
-    background-color: #fffcf6;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  margin: 0;
+  margin-top: 80px;
+  font-family: Arial;
+  background-color: #fffcf6;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body.index-page {
+  margin-top: 60px;
 }
 
 /*
@@ -10,272 +23,316 @@ NAVBAR
 ------------------
 */
 
-/* library */
-#nav {
-    align-items: center;
-    background-color: #272a3a;
-    border-radius: 5px;
-    display: flex;
-    font-size: 18px;
-    padding: 10px;
-    position: sticky;
-    top: 10px;
+.nav-center {
+  display: flex;       
+  justify-content: center; 
+  align-items: center;     
+  flex: 1;                  
+  margin-right: 80px;
 }
 
-.navHead {
-    color: #fff;
-    margin-right: 20px;
-    font-size: 24px;
-    font-weight: bold;
+.nav-center .nav-logo{
+  height: 60px; 
 }
 
-.navLink {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 20px;
-}
-
-.navLink:hover {
-    text-decoration: underline;
-}
-
-body {
-    margin: 0;
-    font-family: Arial;
+.nav-text {
+  color: white;
+  font-size: 40px;
 }
 
 /* Navbar container */
 .TopNav {
-    overflow: hidden;
-    background-color: #333;
+  display: flex;            
+  justify-content: space-between; 
+  align-items: center;      
+  position: fixed;
+  top: 0;
+  background-color: #333;
+  z-index: 1000;
+  width: 100%;
 }
 
 /* Links inside the navbar */
 .TopNav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 20px;
-    line-height: 35px;
-    font-family: "Monaco", "Lucida Console", monospace;
-    transition: 0.3s;
+  float: left;
+  color: #f2f2f2;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  line-height: 35px;
+  font-family: "Monaco", "Lucida Console", monospace;
+  transition: 0.3s;
 }
 
 /* Icon hidden by default */
 .TopNav .icon {
-    display: none;
+  display: none;
 }
 
 /* The dropdown container */
 .dropdown {
-    float: right;
-    overflow: hidden;
+  float: right;
 }
 
 /* Dropdown button */
 .dropdown .dropbtn {
-    cursor: pointer;
-    border: none;
-    padding: 14px 16px;
-    background-color: inherit;
-    margin: 0;
+  cursor: pointer;
+  border: none;
+  padding: 14px 16px;
+  background-color: inherit;
 }
 
 /* Dropdown content box (hidden by default) */
 .DropdownContent {
-    display: none;
-    position: absolute;
-    background-color: #333;
-    min-width: 100px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    border: 2px solid #000000;
-    right: 5px;
-    top: 65px;
-    border-radius: 10px;
+  display: none;
+  position: fixed;
+  background-color: #333;
+  min-width: 100px;
+  height: 105px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border: 2px solid #000000;
+  z-index: 1001;
+  /* Higher than the navbar to ensure it appears on top */
+  right: 10px;
+  top: 65px;
+  border-radius: 10px;
 }
 
 /* Links inside the dropdown */
 .DropdownContent a {
-    float: none;
-    padding: 0px 10px;
-    display: block;
-    text-align: left;
-    font-size: 15px;
+  float: none;
+  padding: 0px 10px;
+  display: block;
+  text-align: left;
+  font-size: 15px;
+}
+
+.logoutButton {
+  background: none;
+  /* Remove button background */
+  border: none;
+  /* Remove button border */
+  color: #f2f2f2;
+  /* Match text color of navbar links */
+  width: 170px;
+  text-align: left;
+  padding: 0px 10px;
+  font-size: 15px;
+  /* Match font size of navbar links */
+  line-height: 35px;
+  /* Match line height of navbar links */
+  font-family: "Monaco", "Lucida Console", monospace;
+  /* Match font family */
+  cursor: pointer;
+  /* Keep cursor as pointer to indicate clickable */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Adding hover effect similar to other navbar links */
+.logoutButton:hover {
+  background-color: #376e81;
+  /* Match hover background of navbar links */
+  color: white;
+  /* Match hover text color of navbar links */
+  transition: 0.3s;
 }
 
 /* Add a background color to navbar links on hover */
-.TopNav .link:hover, .DropdownContent a:hover {
-    background-color: #376e81;
-    color: white;
+.TopNav .link:hover,
+.DropdownContent a:hover {
+  background-color: #376e81;
+  color: white;
 }
 
 /* Different hover borders for first child in dropdown */
 .DropdownContent a:first-child:hover {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-/* Different hover borders for last child in dropdown */
-.DropdownContent a:last-child:hover {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 /* Activates with javascript for show the dropdown menu */
 .show {
-    display: block;
+  display: block;
 }
 
 /* User images for dropdown button */
 .dropdown .dropbtn img {
-    height: 35px;
-}
-
-@media screen and (max-width: 600px) {
-    /* Hide links in navbar */
-    .TopNav .link {
-        display: none;
-    }
-
-    /* Show icon and dropdown image in navbar */
-    .TopNav .icon, .dropdown .dropbtn {
-        display: block;
-    }
+  height: 35px;
 }
 
 /* The dropdown container */
 .SideNav {
-    height: 100%;
-    width: 0; /* Initially hidden */
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #2c2c2c;
-    overflow-x: hidden; /* Prevents horizontal scroll inside the side navigation */
-    transition: 0.5s;
-    padding-top: 60px;
+  height: 100%;
+  width: 0;
+  /* Initially hidden */
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #2c2c2c;
+  overflow-x: hidden;
+  /* Prevents horizontal scroll inside the side navigation */
+  transition: 0.5s;
+  padding-top: 60px;
+  z-index: 1001;
+  /* Higher than the navbar to ensure it appears on top */
 }
 
 /* Links inside in sidenav */
 .SideNav a {
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #ccc;
-    display: block;
-    transition: 0.3s;
-    font-family: "Monaco", "Lucida Console", monospace;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #ccc;
+  display: block;
+  transition: 0.3s;
+  font-family: "Monaco", "Lucida Console", monospace;
 }
 
 .SideNav .link:hover {
-    background-color: #376e81;
-    color: white;
+  background-color: #376e81;
+  color: white;
 }
 
 /* Close button for sidenav */
 .closebtn {
-    position: absolute;
-    top: 0;
-    margin-top: 10px;
-    font-size: 36px;
+  position: absolute;
+  top: 0;
+  margin-top: 10px;
+  font-size: 36px;
 }
 
-/* Index Page */
-
-.indexContent {
-    width: 50%;
-    float: left;
-    margin-right: 50px;
-    margin-left: 50px;
-    margin-top: 50px;
+/*
+------------------
+HomePage
+------------------
+*/
+.mainContent {
+  align-items: center;
+  padding-top: 100px;
+  height: 95vh;
+  /* Set the height relative to the viewport */
+  background-image: url("/Images/testBG.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  /* Full width of the viewport */
 }
 
-.indexButton {
-    margin-top: 50px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.mainContent .mainDiv {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  color: #fff;
+  background-color: rgba(128, 128, 128, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  max-width: 800px;
 }
 
-.indexButton button {
-    margin-right: 30px;
-    margin-left: 30px;
+.mainDiv h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
 }
 
-.indexImgContainer {
-    width: 40%;
-    float: right;
+.mainDiv p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: justify;
+  color: #c9c7c7;
 }
 
-.indexImg {
-    width: 35%;
-    height: auto;
-    margin-top: 50px;
-    margin-right: 20px;
-    margin-left: 50px;
+.AccButtonIndex {
+  padding: 10px 20px;
+  background-color: #5c6bc0;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 20px;
+  font-size: 18px;
+  transition: all 0.3s ease;
 }
 
-/* Login Container */
+.AccButtonIndex:hover {
+  background-color: #3f51b5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+/*
+------------------
+Login - SignUp
+------------------
+*/
+/* Login - SignUp Container */
 .AccContainer {
-    width: 300px;
-    margin: auto;
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #f3f3f3;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    color: #5c6bc0;
+  width: 300px;
+  margin: auto;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: #5c6bc0;
 }
 
 .AccForm .InputGroup input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 15px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
 }
 
 /* Flexbox for aligning link and button */
 .links {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Color for links inside of Login form */
-.links a, .AccLink a {
-    color: #5c6bc0;
-    text-decoration: none;
+/* Color for links inside of form */
+.links a,
+.AccLink a {
+  color: #5c6bc0;
+  text-decoration: none;
 }
 
-/* Hover for links inside of Login form */
-.links a:hover, .AccLink a:hover {
-    text-decoration: underline;
+/* Hover for links inside of form */
+.links a:hover,
+.AccLink a:hover {
+  text-decoration: underline;
 }
 
 .AccButton {
-    padding: 10px 20px;
-    background-color: #5c6bc0;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  padding: 10px 20px;
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .AccButton:hover {
-    background-color: #3f51b5;
+  background-color: #3f51b5;
+}
+
+.buttons {
+  margin-top: 30px;
 }
 
 .AccLink {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .SignupText {
-    color: #000;
+  color: #000;
 }
 
 /*
@@ -284,63 +341,39 @@ SEARCH
 ------------------
 */
 .search {
-    background-color: #fff;
-    padding-top: 5px;
-    margin: 20px;
-    text-align: center;
+  background-color: #fff;
+  padding-top: 5px;
+  margin: 20px;
+  text-align: center;
 }
 
 #searchBar {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 8px;
-    text-decoration: none;
-    width: 33%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 8px;
+  text-decoration: none;
+  width: 33%;
 }
 
 #searchButton {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    padding-left: 20px;
-    padding-right: 20px;
+  padding: 8px 12px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #57f287;
+  color: #23272a;
+  transition: all 0.3s ease;
 }
 
-/*
-------------------
------NAV BAR------
-------------------
-*/
-#nav {
-    align-items: center;
-    background-color: #272a3a;
-    border-radius: 5px;
-    display: flex;
-    font-size: 18px;
-    padding: 10px;
-    position: sticky;
-    top: 10px;
-}
-
-.navHead {
-    color: #fff;
-    margin-right: 20px;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.navLink {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 20px;
-}
-
-.navLink:hover {
-    text-decoration: underline;
+#searchButton:hover {
+  background-color: green;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  color: #fff;
 }
 
 /*
@@ -349,24 +382,24 @@ SEARCH
 ------------------
 */
 #search {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 8px;
-    padding: 8px;
-    text-decoration: none;
-    width: 33%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 8px;
+  padding: 8px;
+  text-decoration: none;
+  width: 33%;
 }
 
 #search:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
 }
 
 #searchDiv {
-    margin-top: 20px;
-    text-align: center;
+  margin-top: 20px;
+  text-align: center;
 }
 
 /*
@@ -374,31 +407,25 @@ SEARCH
 ------BUTTONS-----
 ------------------
 */
-#searchButton {
-    padding: 8px 12px;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-#searchButton {
-    background-color: #57f287;
-    color: #23272a;
-}
 
 .saveButton {
-    display: block;
-    width: 100%;
-    background-color: #5865f2;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 5px;
-    padding: 8px 0;
+  display: block;
+  width: 100%;
+  background-color: #5865f2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  padding: 8px 0;
+  transition: all 0.3s ease;
+}
+
+.saveButton:hover {
+  background-color: #3f51b5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  color: #fff;
 }
 
 /*
@@ -407,20 +434,20 @@ SEARCH
 ------------------
 */
 .userReview {
-    background-color: #fff;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-    margin: 10px;
-    padding: 10px;
+  background-color: #fff;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  margin: 10px;
+  padding: 10px;
 }
 
 #userReviewTitle {
-    margin: 10px;
+  margin: 10px;
 }
 
 .userReviewsContainer {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 
@@ -430,24 +457,25 @@ SEARCH
 ------------------
 */
 .grid-item {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  align-items: start;
 }
 
 .searchResultDiv {
-    background-color: #fff;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-    margin: 10px;
-    max-width: 300px;
-    padding: 10px;
-    text-align: center;
+  background-color: #fff;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  margin: 10px;
+  max-width: 300px;
+  padding: 10px;
+  text-align: center;
 }
 
 .searchResultDiv img {
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 /*
@@ -456,41 +484,41 @@ SEARCH
 ------------------
 */
 .bookDiv {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px;
-    padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  padding: 10px;
 }
 
 .leftContent {
-    flex: 1;
+  flex: 1;
 }
 
 .rightContent {
-    margin-left: 30px;
-    width: 80%;
+  margin-left: 30px;
+  width: 80%;
 }
 
 #bookDescHead {
-    margin-top: -10px;
+  margin-top: -10px;
 }
 
 #bookDesc {
-    margin-top: -15px;
+  margin-top: -15px;
 }
 
 .bookHeading {
-    text-align: center;
-    size: 48px;
+  text-align: center;
+  size: 48px;
 }
 
 .bookPageSaveButton {
-    background-color: #5865f2;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 10px 15px;
+  background-color: #5865f2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 15px;
 }
 
 /*
@@ -499,5 +527,172 @@ SEARCH
 ------------------
 */
 .heading {
-    text-align: center;
+  text-align: center;
+}
+
+/*
+------------------
+-----CONTACT PAGE----
+------------------
+*/
+
+.contact {
+  max-width: 950px;
+  margin: 80px auto;
+  color: white;
+  line-height: 1.5;
+
+}
+
+.contact-banner {
+  color: black;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: auto;
+}
+
+.contact-banner h1 {
+  font-size: 35px;
+  margin: 0;
+}
+
+.contact-content {
+  display: flex;
+  margin-top: 40px;
+
+}
+
+.contact-icon {
+  background-color: white;
+  border-radius: 30px;
+  padding: 15px;
+  vertical-align: top;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cccccc;
+  /* Adds a light grey border */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow */
+}
+
+.contact-info {
+  display: inline-block;
+  padding: 4px 20px 0px 20px;
+}
+
+.contact-address {
+  margin-top: 30px;
+  color: #000;
+}
+
+.contact-left {
+  width: 530px;
+  margin-left: 20px;
+}
+
+.contact-right {
+  flex: 1 1 auto;
+  background-color: white;
+  border: 2px solid #cccccc;
+  /* Adds a light grey border */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow */
+  margin-right: 20px;
+}
+
+.contact-form {
+  color: #000;
+  padding: 40px;
+  margin: auto;
+}
+
+.contact-info-title {
+  color: #5c6bc0;
+}
+
+.contact-form-line {
+  margin-bottom: 20px;
+}
+
+.contact-form textarea {
+  height: 150px;
+  width: 400px;
+  resize: none;
+  /* Prevents resizing of the textarea */
+}
+
+.contact-send {
+  margin-top: 20px;
+}
+
+.contact-form-line label {
+  padding-bottom: 5px;
+  display: block;
+}
+
+/*
+------------------
+---Media Screen---
+------------------
+*/
+@media screen and (max-width: 900px) {
+  .TopNav .link {
+    display: none;
+    /* Hide links in the navbar on smaller screens */
+  }
+
+  .TopNav .icon,
+  .dropdown .dropbtn {
+    display: block;
+    /* Show icon and dropdown button in navbar on smaller screens */
+  }
+
+  .mainContent .mainDiv {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .nav-center {
+    justify-content: flex-start; 
+    margin-left: 20px;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .contact-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .contact-right {
+    margin-top: 30px;
+    width: 400px;
+    margin-right: 0px;
+  }
+
+  .contact-address:first-child {
+    margin-top: 0px;
+  }
+
+  .contact-form textarea {
+    height: 150px;
+    width: 325px;
+    resize: none;
+    /* Prevents resizing of the textarea */
+  }
+  .contact-left{
+    width: 430px;
+  }
+}
+
+@media screen and (max-width: 535px) {
+  .grid-item {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
 }
