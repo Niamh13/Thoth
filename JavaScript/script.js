@@ -1,11 +1,43 @@
 /*
 =======================
+=====LOG IN STATUS=====
+=======================
+*/
+let isLoggedIn = false;
+
+function checkLoginStatus() {
+    console.log("Checking login status...");
+    fetch("/PHP/checkLogin.php")
+        .then(response => response.json())
+        .then(data => {
+            console.log("Received login status data:", data);
+            if (data.loggedIn) {
+                // User is logged in, load their library
+                console.log("User is logged in");
+                isLoggedIn = true;
+                loadLibrary();
+            } else {
+                // User is not logged in, redirect them to login page
+                console.log("User is not logged in");
+                isLoggedIn = false;
+                alert("Please log in");
+                window.location.href = "login.html";
+            }
+        })
+        .catch(error => {
+            console.error("Error checking login status:", error);
+        });
+}
+
+
+/*
+=======================
 ====SEARCH FUNCTION====
 =======================
 */
 function search() {
     const searchInput = document.getElementById("search").value;
-    if (searchInput == "") {
+    if (searchInput === "") {
         alert("Please enter a search");
     } else {
         // Reference 1
@@ -31,12 +63,12 @@ function displayResults(books) {
     books.forEach((book) => {
         const bookInfo = `
         <div class="searchResultDiv">
-          <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover">
+          <img src="${book.volumeInfo.imageLinks.thumbnail}" class="searchResultCover" alt="book cover">
           <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
           <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
-          <form method="post">
-            <button class="saveButton" name="savebutton">Save to Library</button>
-          </form>
+          <button class="saveButton" name="savebutton" onclick="saveToLibrary('${book.id}')">
+            <strong>Save to Library</strong>
+          </button>
           <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
         </div>
     `;
@@ -54,24 +86,19 @@ function viewBook(bookId) {
 ===DISPLAY BOOK PAGE===
 =======================
 */
-function getBook() {
+async function getBook() {
     const urlParams = new URLSearchParams(window.location.search);
     const bookId = urlParams.get("id");
-    //setting var url to a cookie to use in php file
-    const url = fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`).then((response) => response.json()).then((data) => {
-        displayBookDetails(data);
-        console.log(data);
-    })
-    .catch((error) => console.error("Error fetching book details:", error));;
-    document.cookie="url";
 
-    fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-        .then((response) => response.json())
-        .then((data) => {
-            displayBookDetails(data);
-            console.log(data);
-        })
-        .catch((error) => console.error("Error fetching book details:", error));
+    try {
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`);
+        const book = await response.json();
+        displayBookDetails(book);
+        console.log(book);
+    } catch (error) {
+        console.error("Error fetching book details:", error);
+    }
+
 
     function displayBookDetails(book) {
         const bookDetails = document.getElementById("bookDetails");
@@ -80,18 +107,16 @@ function getBook() {
     <h1 class="bookHeading">${book.volumeInfo.title}</h1>  
     <div class="bookDiv">
       <div class="leftContent">
-        <img src="${book.volumeInfo.imageLinks.thumbnail}" />
+        <img src="${book.volumeInfo.imageLinks.thumbnail}"  alt="book cover"/>
         <p><strong>Author:</strong> ${book.volumeInfo.authors}</p>
         <p><strong>Publisher:</strong> ${book.volumeInfo.publisher}</p>
         <p><strong>Published Date:</strong> ${book.volumeInfo.publishedDate}</p>
         <p><strong>Page Count:</strong> ${book.volumeInfo.pageCount}</p>
         <p><strong>Categories:</strong> ${book.volumeInfo.categories}</p>
         <p><strong>Rating:</strong> ${book.volumeInfo.averageRating}</p>
-        <form method="post">
-            <button class="bookPageSaveButton" name="savebutton">
+            <button class="saveButton" name="savebutton" onclick="saveToLibrary('${book.id}')">
                 <strong>Save to Library</strong>
             </button>
-        </form>
       </div>
       <div class="rightContent">
         <h2 id="bookDescHead">Description</h2>
@@ -102,19 +127,23 @@ function getBook() {
       <h1 id="userReviewTitle">User Reviews</h1>
       <div class="userReviews">
         <div class="userReview">
-          <p class="userReviewUsername"><strong>User 128482</strong></p>
+          <p class="userReviewUsername"><strong>SuperAwesomeMegaJosh</strong></p>
+          <p><strong>Rating:</strong>⭐⭐⭐⭐️</p>
+          <p class="userReviewText">Maecenas tincidunt lacinia dolor non semper. Quisque pharetra, eros at posuere feugiat, ex dui ultrices justo, id maximus tortor ligula ut ligula. Etiam pretium faucibus nisl, sed imperdiet nulla volutpat eu. Sed convallis, orci quis condimentum volutpat, dolor enim hendrerit nisi, sed tristique enim turpis in eros. Donec et rhoncus leo, non sodales metus. Vestibulum sagittis quam magna. Morbi sit amet posuere ipsum. Morbi mattis augue eu lorem scelerisque iaculis sed at dolor. Proin lacinia lacinia quam, eget dictum est porttitor nec. In aliquet augue tortor, a vulputate mi lobortis a. Etiam feugiat lectus nulla, a ultrices magna egestas sit amet. Nam vel magna lectus. Proin et molestie arcu. Nulla iaculis tincidunt dolor eget volutpat. Maecenas sodales porta elit at accumsan. Aliquam nec varius turpis, ut luctus neque.</p>
+        </div>
+        <div class="userReview">
+          <p class="userReviewUsername"><strong>Niamh</strong></p>
+          <p><strong>Rating:</strong>⭐⭐</p>
+          <p class="userReviewText">Etiam id dui non urna ornare dignissim nec vel massa. Praesent non dictum lacus. In varius fringilla vehicula. Suspendisse venenatis ut elit ac commodo. Sed sed ligula accumsan erat dictum ullamcorper vel a tellus. Donec facilisis fermentum fringilla. Nam eu ultricies turpis. Pellentesque tristique varius nisl ac facilisis. Morbi tellus ex, malesuada ac suscipit non, tincidunt in neque. Quisque ut tellus libero. Proin mattis, risus non convallis facilisis, arcu urna lobortis lectus, vel malesuada nunc felis eget eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae</p>
+        </div>
+        <div class="userReview">
+          <p class="userReviewUsername"><strong>Dongyi</strong></p>
+          <p><strong>Rating:</strong>⭐️</p>
           <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
         </div>
         <div class="userReview">
-          <p class="userReviewUsername"><strong>User 128482</strong></p>
-          <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
-        </div>
-        <div class="userReview">
-          <p class="userReviewUsername"><strong>User 128482</strong></p>
-          <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
-        </div>
-        <div class="userReview">
-          <p class="userReviewUsername"><strong>User 128482</strong></p>
+          <p class="userReviewUsername"><strong>Ata</strong></p>
+          <p><strong>Rating:</strong>⭐⭐⭐⭐⭐️</p>
           <p class="userReviewText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, est sed dapibus accumsan, felis leo bibendum eros, ac auctor arcu tellus sit amet lorem. Integer id tempus enim, sed finibus purus. Sed placerat tellus sem, in tempor ipsum auctor non. Quisque mollis, nisl ultrices scelerisque faucibus, erat dui rutrum nunc, quis luctus purus dui non dui. Maecenas dignissim sem magna, sit amet scelerisque sem eleifend non. Aenean ullamcorper dictum odio, eu malesuada mi viverra id. Quisque vitae magna et sapien molestie dictum.</p>
         </div>
       </div>
@@ -129,55 +158,70 @@ function getBook() {
 =======SAVE BOOK=======
 =======================
 */
-// Reference 3
-// function to store the book ids in an array
 function saveToLibrary(bookId) {
-    // fetches the library array from local storage, or creates one if it doesn't exist.
-    let library = JSON.parse(localStorage.getItem("library")) || [];
-
-    // checks if the books ID is already in the library array.
-    if (!library.includes(bookId)) {
-        // adds the book
-        library.push(bookId);
-
-        // stores the library array in localstorage.
-        localStorage.setItem("library", JSON.stringify(library));
-
-        // tells the user the book was saved.
-        alert("Book saved to library!");
-    } else {
-        // tells the user if the book is already in the array.
-        alert("Book already exists in library!");
-    }
+    // Send a POST request to your PHP backend with the book ID
+    fetch('/PHP/bookSave.php?id=' + bookId, {
+        method: 'POST'
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log('Book saved to library');
+                alert("Book saved!");
+                // Update the library after saving the book
+                loadLibrary();
+            } else {
+                console.error('Error saving book to library');
+                alert("Error saving book!");
+            }
+        })
+        .catch(error => {
+            console.error('Error saving book to library:', error);
+            alert("Error saving book!");
+        });
 }
 
 /*
 =======================
-=====USERS LIBRARY=====
+====DISPLAY LIBRARY====
 =======================
 */
 function loadLibrary() {
-    const libraryBooks = document.getElementById("libraryBooks");
-    libraryBooks.innerHTML = "";
+    fetch("/PHP/display.php")
+        .then(response => response.json())
+        .then(data => {
+            if (isLoggedIn === true) {
+                // Check if the response contains the expected data structure
+                if (Array.isArray(data)) {
+                    console.log("Book IDs:", data);
+                    // Loop through each book ID and fetch its details
+                    data.forEach((bookId) => {
+                        fetchBookDetails(bookId)
+                            .then((book) => {
+                                displayBook(book);
+                            })
+                            .catch((error) => {
+                                console.error("Error fetching book details:", error);
+                            });
+                    });
+                } else {
+                    console.error("Error:", data);
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching book IDs:", error);
+        });
+}
 
-    // fetches the library array from local storage, or creates one if it doesn't exist.
-    const library = JSON.parse(localStorage.getItem("library")) || [];
-
-    if (library.length === 0) {
-        // if the user's library is empty, prints a message to the screen.
-        libraryBooks.innerHTML = "<p>No books saved in your library.</p>";
-        return;
-    }
-
-    library.forEach((bookId) => {
-        fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                displayBook(data);
-                console.log(data);
-            })
-            .catch((error) => console.error("Error fetching book details:", error));
-    });
+function fetchBookDetails(bookId) {
+    // Fetch book details using the book ID
+    return fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
+        .then(response => response.json())
+        .then(data => data)
+        .catch(error => {
+            console.error("Error fetching book details:", error);
+            throw error;
+        });
 }
 
 function displayBook(book) {
@@ -188,10 +232,15 @@ function displayBook(book) {
         <h2 class="searchResultTitle">${book.volumeInfo.title}</h2>
         <p class="searchResultAuthor"><strong>Author:</strong> ${book.volumeInfo.authors}</p>
         <button class="saveButton" onclick="viewBook('${book.id}')">View Book</button>
+        <form method="DELETE">
+        <button class="saveButton" name="saveButton">Delete from Library</button>
+        </form>
       </div>
     `;
     libraryBooks.innerHTML += bookInfo;
 }
+
+
 
 /*
 ------------------------------
@@ -234,26 +283,15 @@ function logout() {
 
 /*
 ------------------------------
-----------Login---------------
+----------contact---------------
 ------------------------------
 */
-// document.addEventListener('DOMContentLoaded', (event) => {
-//     document.getElementById('AccForm').addEventListener('submit', function (event) {
-//         event.preventDefault();
-//         check();
-//     });
-// });
-//
-// function check() {
-//     let user = document.getElementById("username").value;
-//     let password = document.getElementById("password").value;
-//     if (user === "user1" && password === "teamP") {
-//         window.location.href = 'library.html';
-//     } else {
-//         alert("Username and/or password is incorrect");
-//     }
-// }
+function contactForm() {
 
+    alert("Your message has been sent successfully!");
+    return false;
+    
+}
 
 /*
 ------------------------------
