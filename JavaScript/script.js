@@ -350,8 +350,9 @@ function contactForm() {
 
     alert("Your message has been sent successfully!");
     location.reload();
-
 }
+
+
 
 /*
 ------------------------------
