@@ -1,7 +1,14 @@
 <?php
 session_start();
 
-unset($_SESSION['username']);
-echo '<script>console.log("Logged out Successfully"); window.location.href = "/Beta2/login.html";</script>';
+// Log the logout event
+// Consider logging to a file or database instead of console
+error_log("User logged out: " . $_SESSION['username']);
 
-die;
+// Destroy the session
+session_unset();
+session_destroy();
+
+// Redirect to login page
+header("Location: /login.html");
+exit; // Ensure script termination
